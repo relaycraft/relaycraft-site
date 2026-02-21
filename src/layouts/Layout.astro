@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import Analytics from '@vercel/analytics/astro';
 
 interface Props {
   title: string;
@@ -19,6 +20,7 @@ const { title, description = "The Next-Generation, AI-Native Web Traffic Inspect
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <Analytics />
     <script is:inline>
       // Prevent FOUC (Flash of Unstyled Content)
       const theme = localStorage.getItem('theme');

@@ -1,4 +1,28 @@
----
-// Redirect to default language
-return Astro.redirect('/en');
----
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>RelayCraft</title>
+    <meta http-equiv="refresh" content="0;url=/en/" />
+    <script is:inline>
+      const getPreferredLanguage = () => {
+        const languages = window.navigator.languages || [window.navigator.language];
+        for (const lang of languages) {
+          if (lang.startsWith('zh')) return 'zh';
+          if (lang.startsWith('en')) return 'en';
+        }
+        return 'en';
+      };
+
+      // Faster redirection before the meta refresh triggers
+      const lang = getPreferredLanguage();
+      window.location.replace(`/${lang}/`);
+    </script>
+  </head>
+  <body style="background: #000;">
+    <!-- Minimal fallback in case scripts and meta refresh both fail -->
+    <noscript>
+      <p>Redirecting to <a href="/en/">RelayCraft</a>...</p>
+    </noscript>
+  </body>
+</html>

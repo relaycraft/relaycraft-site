@@ -1,0 +1,51 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { Header } from '../../components/Header';
+import { Hero } from '../../components/Hero';
+import { Features } from '../../components/Features';
+import { UserPersonas } from '../../components/UserPersonas';
+import { Security } from '../../components/Security';
+import { DownloadSection } from '../../components/DownloadSection';
+import { Footer } from '../../components/Footer';
+import { ui, featureContent, languages, personaContent, securityContent } from '../../i18n/ui';
+import { getLatestRelease } from '../../lib/github';
+
+export function getStaticPaths() {
+  return [
+    {params: {lang: 'en'}},
+    {params: {lang: 'zh'}},
+  ];
+}
+
+const { lang } = Astro.params;
+
+// Default to 'en' if lang is undefined, though getStaticPaths ensures it's set
+const currentLang = (lang as 'en' | 'zh') || 'en';
+const content = ui[currentLang];
+const featuresList = featureContent[currentLang];
+const personas = personaContent[currentLang];
+const securities = securityContent[currentLang];
+
+const pageTitle = currentLang === 'en' 
+  ? "RelayCraft - The Next-Generation Web Traffic Inspector" 
+  : "RelayCraft - 下一代网络流量嗅探器";
+
+const pageDescription = content['hero.subtitle'];
+
+// Fetch latest release data
+const latestRelease = await getLatestRelease();
+---
+
+<Layout title={pageTitle} description={pageDescription} lang={currentLang}>
+  <Header client:load lang={currentLang} content={content} />
+  
+  <main>
+    <Hero client:load content={content} lang={currentLang} />
+    <Features client:visible content={content} featuresList={featuresList} lang={currentLang} />
+    <Security client:visible content={content} securityList={securities} />
+    <UserPersonas client:visible content={content} personaList={personas} />
+    <DownloadSection client:visible content={content} latestRelease={latestRelease} />
+  </main>
+  
+  <Footer content={content} />
+</Layout>

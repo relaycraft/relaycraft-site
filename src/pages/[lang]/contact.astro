@@ -1,0 +1,111 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { Header } from '../../components/Header';
+import { Footer } from '../../components/Footer';
+import { ui } from '../../i18n/ui';
+import { Github, Twitter, Mail, ArrowRight, MessageSquare } from 'lucide-react';
+
+export function getStaticPaths() {
+  return [
+    {params: {lang: 'en'}},
+    {params: {lang: 'zh'}},
+  ];
+}
+
+const { lang } = Astro.params;
+const currentLang = (lang as 'en' | 'zh') || 'en';
+const content = ui[currentLang];
+---
+
+<Layout title={`${content['contact.title']} - RelayCraft`} description={content['contact.subtitle']} lang={currentLang}>
+  <Header client:load lang={currentLang} content={content} />
+  
+  <main class="pt-32 pb-20">
+    <div class="container px-4 md:px-6 mx-auto max-w-5xl">
+      <header class="text-center mb-20">
+        <h1 class="text-4xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70">
+          {content['contact.title']}
+        </h1>
+        <p class="text-xl text-muted-foreground font-medium max-w-2xl mx-auto">
+          {content['contact.subtitle']}
+        </p>
+      </header>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {/* GitHub Card */}
+        <a 
+          href="https://github.com/relaycraft" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          class="group p-8 rounded-3xl border border-white/10 bg-card/50 backdrop-blur-xl hover:border-primary/30 transition-all hover:-translate-y-2"
+        >
+          <div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform">
+            <Github class="w-6 h-6" />
+          </div>
+          <h3 class="text-xl font-bold mb-3">{content['contact.github.title']}</h3>
+          <p class="text-muted-foreground text-sm leading-relaxed mb-6">
+            {content['contact.github.desc']}
+          </p>
+          <div class="flex items-center gap-2 text-primary text-sm font-semibold">
+            {content['contact.github.cta']}
+            <ArrowRight class="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </div>
+        </a>
+
+        {/* Twitter Card */}
+        <a 
+          href="https://twitter.com/relaycraft_app" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          class="group p-8 rounded-3xl border border-white/10 bg-card/50 backdrop-blur-xl hover:border-blue-500/30 transition-all hover:-translate-y-2"
+        >
+          <div class="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-500 mb-6 group-hover:scale-110 transition-transform">
+            <Twitter class="w-6 h-6" />
+          </div>
+          <h3 class="text-xl font-bold mb-3">{content['contact.twitter.title']}</h3>
+          <p class="text-muted-foreground text-sm leading-relaxed mb-6">
+            {content['contact.twitter.desc']}
+          </p>
+          <div class="flex items-center gap-2 text-blue-500 text-sm font-semibold">
+            {content['contact.twitter.cta']}
+            <ArrowRight class="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </div>
+        </a>
+
+        {/* Email Card */}
+        <a 
+          href="mailto:support@relaycraft.dev" 
+          class="group p-8 rounded-3xl border border-white/10 bg-card/50 backdrop-blur-xl hover:border-purple-500/30 transition-all hover:-translate-y-2"
+        >
+          <div class="w-12 h-12 rounded-2xl bg-purple-500/10 flex items-center justify-center text-purple-500 mb-6 group-hover:scale-110 transition-transform">
+            <Mail class="w-6 h-6" />
+          </div>
+          <h3 class="text-xl font-bold mb-3">{content['contact.email.title']}</h3>
+          <p class="text-muted-foreground text-sm leading-relaxed mb-6">
+            {content['contact.email.desc']}
+          </p>
+          <div class="flex items-center gap-2 text-purple-500 text-sm font-semibold">
+            {content['contact.email.cta']}
+            <ArrowRight class="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </div>
+        </a>
+      </div>
+
+      <div class="mt-20 p-8 md:p-12 rounded-3xl border border-white/10 bg-gradient-to-br from-secondary/50 to-background flex flex-col md:flex-row items-center justify-between gap-8">
+        <div>
+           <div class="flex items-center gap-2 mb-4">
+              <MessageSquare class="w-5 h-5 text-primary" />
+              <span class="text-sm font-bold tracking-wider uppercase text-primary">Live Discussions</span>
+           </div>
+           <h3 class="text-2xl font-bold mb-2">Join our Discord Community</h3>
+           <p class="text-muted-foreground">Chat with other developers and the core team in real-time.</p>
+        </div>
+        <a href="https://discord.gg/relaycraft" target="_blank" class="px-8 py-3 bg-foreground text-background rounded-full font-bold hover:scale-105 transition-all">
+          Coming Soon
+        </a>
+      </div>
+    </div>
+  </main>
+  
+  <Footer content={content} />
+</Layout>

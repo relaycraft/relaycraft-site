@@ -1,6 +1,6 @@
 # RelayCraft Official Website
 
-The official website for [RelayCraft](https://github.com/relaycraft/relaycraft) - anext-generation AI-native web traffic inspector.
+The official website for [RelayCraft](https://github.com/relaycraft/relaycraft) - an AI-native web traffic debugging tool.
 
 ## 🌐 Live Site
 

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Apple, ArrowRight } from 'lucide-react';
+import { getLatestRelease } from '../lib/github';
 
 import type { GithubRelease } from '../lib/github';
 
@@ -9,13 +10,24 @@ interface DownloadSectionProps {
   latestRelease: GithubRelease | null;
 }
 
-export const DownloadSection = ({ content, latestRelease }: DownloadSectionProps) => {
+export const DownloadSection = ({ content, latestRelease: buildTimeRelease }: DownloadSectionProps) => {
+  const [release, setRelease] = useState<GithubRelease | null>(buildTimeRelease);
   const fallbackUrl = 'https://github.com/relaycraft/relaycraft/releases/latest';
 
+  useEffect(() => {
+    const updateRelease = async () => {
+      const liveRelease = await getLatestRelease();
+      if (liveRelease) {
+        setRelease(liveRelease);
+      }
+    };
+    updateRelease();
+  }, []);
+
   const downloadLinks = {
-    dmg: latestRelease?.assets.dmg || fallbackUrl,
-    exe: latestRelease?.assets.exe || fallbackUrl,
-    appImage: latestRelease?.assets.appImage || fallbackUrl,
+    dmg: release?.assets.dmg || fallbackUrl,
+    exe: release?.assets.exe || fallbackUrl,
+    appImage: release?.assets.appImage || fallbackUrl,
   };
 
   return (
@@ -40,9 +52,9 @@ export const DownloadSection = ({ content, latestRelease }: DownloadSectionProps
           <p className="text-lg text-muted-foreground leading-relaxed">
             {content['download.subtitle']}
           </p>
-          {latestRelease && (
+          {release && (
             <div className="mt-4 inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
-              {content['download.latest']}: {latestRelease.version}
+              {content['download.latest']}: {release.version}
             </div>
           )}
         </motion.div>

@@ -11,7 +11,21 @@ interface DownloadSectionProps {
 }
 
 export const DownloadSection = ({ content, latestRelease: buildTimeRelease }: DownloadSectionProps) => {
+  const getDefaultWindowsKey = (currentRelease: GithubRelease | null) => {
+    if (currentRelease?.assets.exe) return 'exe';
+    if (currentRelease?.assets.msi) return 'msi';
+    return 'exe';
+  };
+
+  const getDefaultLinuxKey = (currentRelease: GithubRelease | null) => {
+    if (currentRelease?.assets.deb) return 'deb';
+    if (currentRelease?.assets.appImage) return 'appImage';
+    return 'deb';
+  };
+
   const [release, setRelease] = useState<GithubRelease | null>(buildTimeRelease);
+  const [selectedWindows, setSelectedWindows] = useState<string>(getDefaultWindowsKey(buildTimeRelease));
+  const [selectedLinux, setSelectedLinux] = useState<string>(getDefaultLinuxKey(buildTimeRelease));
   const fallbackUrl = 'https://github.com/relaycraft/relaycraft/releases/latest';
 
   useEffect(() => {
@@ -24,11 +38,32 @@ export const DownloadSection = ({ content, latestRelease: buildTimeRelease }: Do
     updateRelease();
   }, []);
 
-  const downloadLinks = {
-    dmg: release?.assets.dmg || fallbackUrl,
-    exe: release?.assets.exe || fallbackUrl,
-    appImage: release?.assets.appImage || fallbackUrl,
-  };
+  const windowsOptions = [
+    { key: 'exe', formatLabel: 'exe', url: release?.assets.exe || fallbackUrl },
+    ...(release?.assets.msi ? [{ key: 'msi', formatLabel: 'msi', url: release.assets.msi }] : []),
+  ];
+
+  const linuxOptions = [
+    { key: 'deb', formatLabel: 'deb', url: release?.assets.deb || fallbackUrl },
+    { key: 'appImage', formatLabel: 'AppImage', url: release?.assets.appImage || fallbackUrl },
+  ];
+
+  useEffect(() => {
+    const hasWindowsOption = windowsOptions.some((option) => option.key === selectedWindows);
+    if (!hasWindowsOption) {
+      setSelectedWindows(getDefaultWindowsKey(release));
+    }
+
+    const hasLinuxOption = linuxOptions.some((option) => option.key === selectedLinux);
+    if (!hasLinuxOption) {
+      setSelectedLinux(getDefaultLinuxKey(release));
+    }
+  }, [release, selectedWindows, selectedLinux, windowsOptions, linuxOptions]);
+
+  const selectedWindowsOption = windowsOptions.find((option) => option.key === selectedWindows) || windowsOptions[0];
+  const selectedLinuxOption = linuxOptions.find((option) => option.key === selectedLinux) || linuxOptions[0];
+  const releasePageUrl = release?.releaseUrl || fallbackUrl;
+  const macUrl = release?.assets.dmg || fallbackUrl;
 
   return (
     <section id="download" className="py-24 relative overflow-hidden bg-background">
@@ -62,7 +97,7 @@ export const DownloadSection = ({ content, latestRelease: buildTimeRelease }: Do
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {/* macOS */}
           <motion.a
-            href={downloadLinks.dmg}
+            href={macUrl}
             target="_blank"
             rel="noopener noreferrer"
             initial={{ opacity: 0, y: 40 }}
@@ -90,10 +125,7 @@ export const DownloadSection = ({ content, latestRelease: buildTimeRelease }: Do
           </motion.a>
 
           {/* Windows */}
-          <motion.a
-            href={downloadLinks.exe}
-            target="_blank"
-            rel="noopener noreferrer"
+          <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -113,18 +145,44 @@ export const DownloadSection = ({ content, latestRelease: buildTimeRelease }: Do
               <h3 className="text-2xl font-bold mb-2 break-keep">{content['download.windows']}</h3>
               <span className="text-sm text-muted-foreground mb-8 flex-1">{content['download.windows.desc']}</span>
 
-              <div className="w-full py-3 bg-primary text-primary-foreground rounded-xl text-sm font-semibold flex items-center justify-center gap-2 group-hover:bg-primary/90 transition-all shadow-[0_0_20px_rgba(59,130,246,0.2)] group-hover:shadow-[0_0_30px_rgba(59,130,246,0.4)] mt-auto">
-                {content['download.extension.exe']}
+              {windowsOptions.length > 1 && (
+                <>
+                  <div className="w-full mb-4 rounded-xl border border-white/10 bg-muted/35 p-1 grid grid-cols-2 gap-1">
+                    {windowsOptions.map((option) => {
+                      const active = option.key === selectedWindowsOption.key;
+                      return (
+                        <button
+                          key={option.key}
+                          type="button"
+                          onClick={() => setSelectedWindows(option.key)}
+                          className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
+                            active
+                              ? 'bg-background text-foreground border border-white/10'
+                              : 'text-muted-foreground hover:text-foreground hover:bg-background/60'
+                          }`}
+                        >
+                          {option.formatLabel}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </>
+              )}
+
+              <a
+                href={selectedWindowsOption.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full py-3 bg-primary text-primary-foreground rounded-xl text-sm font-semibold flex items-center justify-center gap-2 hover:bg-primary/90 transition-all shadow-[0_0_20px_rgba(59,130,246,0.2)] hover:shadow-[0_0_30px_rgba(59,130,246,0.4)] mt-auto"
+              >
+                {content['download.action']} {selectedWindowsOption.formatLabel}
                 <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-              </div>
+              </a>
             </div>
-          </motion.a>
+          </motion.div>
 
           {/* Linux */}
-          <motion.a
-            href={downloadLinks.appImage}
-            target="_blank"
-            rel="noopener noreferrer"
+          <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -144,15 +202,54 @@ export const DownloadSection = ({ content, latestRelease: buildTimeRelease }: Do
               <h3 className="text-2xl font-bold mb-2 break-keep">{content['download.linux']}</h3>
               <span className="text-sm text-muted-foreground mb-8 flex-1">{content['download.linux.desc']}</span>
 
-              <div className="w-full py-3 bg-primary text-primary-foreground rounded-xl text-sm font-semibold flex items-center justify-center gap-2 group-hover:bg-primary/90 transition-all shadow-[0_0_20px_rgba(59,130,246,0.2)] group-hover:shadow-[0_0_30px_rgba(59,130,246,0.4)] mt-auto">
-                {content['download.extension.appimage']}
+              {linuxOptions.length > 1 && (
+                <>
+                  <div className="w-full mb-4 rounded-xl border border-white/10 bg-muted/35 p-1 grid grid-cols-2 gap-1">
+                    {linuxOptions.map((option) => {
+                      const active = option.key === selectedLinuxOption.key;
+                      return (
+                        <button
+                          key={option.key}
+                          type="button"
+                          onClick={() => setSelectedLinux(option.key)}
+                          className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
+                            active
+                              ? 'bg-background text-foreground border border-white/10'
+                              : 'text-muted-foreground hover:text-foreground hover:bg-background/60'
+                          }`}
+                        >
+                          {option.formatLabel}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </>
+              )}
+
+              <a
+                href={selectedLinuxOption.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full py-3 bg-primary text-primary-foreground rounded-xl text-sm font-semibold flex items-center justify-center gap-2 hover:bg-primary/90 transition-all shadow-[0_0_20px_rgba(59,130,246,0.2)] hover:shadow-[0_0_30px_rgba(59,130,246,0.4)] mt-auto"
+              >
+                {content['download.action']} {selectedLinuxOption.formatLabel}
                 <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-              </div>
+              </a>
             </div>
-          </motion.a>
+          </motion.div>
         </div>
 
-        <div className="mt-16 text-sm text-muted-foreground">
+        <div className="mt-10 text-sm text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+          <p>
+            {content['download.notice.prefix']}
+            <a href={releasePageUrl} target="_blank" rel="noopener noreferrer" className="underline hover:text-primary transition-colors">
+              {content['download.notice.link']}
+            </a>
+            {content['download.notice.suffix']}
+          </p>
+        </div>
+
+        <div className="mt-8 text-sm text-muted-foreground">
           {content['download.agreement']} <a href={`/${content['blog.switch_lang'] === 'English' ? 'zh' : 'en'}/terms`} className="underline hover:text-primary transition-colors">{content['download.terms']}</a> & <a href={`/${content['blog.switch_lang'] === 'English' ? 'zh' : 'en'}/privacy`} className="underline hover:text-primary transition-colors">{content['download.privacy']}</a>.
         </div>
       </div>

@@ -83,8 +83,8 @@ export const Hero = ({ content, lang = 'en' }: HeroProps) => {
               aspectRatio="aspect-[16/10]"
               label="Premium App Interface"
               className="rounded-xl shadow-inner border border-border/50 dark:border-white/5 bg-muted/20 dark:bg-black/20"
-              video="/videos/hero-{lang}.mp4"
-              poster="/images/hero-{lang}-poster.png"
+              video={`/videos/hero-${lang}.mp4`}
+              poster={content['hero.image']}
               lang={lang}
             />
           </div>

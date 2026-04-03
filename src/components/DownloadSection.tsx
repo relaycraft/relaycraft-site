@@ -111,8 +111,8 @@ export const DownloadSection = ({ content, latestRelease: buildTimeRelease }: Do
             <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
             <div className="relative z-10 flex flex-col items-center w-full h-full">
-              <div className="mb-6 p-5 rounded-2xl bg-gradient-to-br from-background to-muted border border-white/10 shadow-lg group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all duration-300">
-                <Apple className="h-10 w-10 text-foreground shrink-0" />
+              <div className="mb-6 p-5 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/20 shadow-lg group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all duration-300">
+                <Apple className="h-10 w-10 text-primary shrink-0" />
               </div>
               <h3 className="text-2xl font-bold mb-2 break-keep">{content['download.macos']}</h3>
               <span className="text-sm text-muted-foreground mb-8 flex-1">{content['download.macos.desc']}</span>
@@ -137,8 +137,8 @@ export const DownloadSection = ({ content, latestRelease: buildTimeRelease }: Do
             <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
             <div className="relative z-10 flex flex-col items-center w-full h-full">
-              <div className="mb-6 p-5 rounded-2xl bg-gradient-to-br from-background to-muted border border-white/10 shadow-lg group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all duration-300">
-                <svg viewBox="0 0 24 24" className="h-10 w-10 fill-foreground shrink-0" xmlns="http://www.w3.org/2000/svg">
+              <div className="mb-6 p-5 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/20 shadow-lg group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all duration-300">
+                <svg viewBox="0 0 24 24" className="h-10 w-10 fill-primary shrink-0" xmlns="http://www.w3.org/2000/svg">
                   <path d="M0 3.449L9.75 2.1V11.7H0V3.449zm0 17.1L9.75 21.9V12.3H0v8.249zM10.5 2V11.7H24V0L10.5 2zm0 19.9L24 24V12.3H10.5v9.6z" />
                 </svg>
               </div>
@@ -194,8 +194,8 @@ export const DownloadSection = ({ content, latestRelease: buildTimeRelease }: Do
             <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
             <div className="relative z-10 flex flex-col items-center w-full h-full">
-              <div className="mb-6 p-5 rounded-2xl bg-gradient-to-br from-background to-muted border border-white/10 shadow-lg group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all duration-300">
-                <svg viewBox="0 0 24 24" className="h-10 w-10 fill-foreground shrink-0" xmlns="http://www.w3.org/2000/svg">
+              <div className="mb-6 p-5 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/20 shadow-lg group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all duration-300">
+                <svg viewBox="0 0 24 24" className="h-10 w-10 fill-primary shrink-0" xmlns="http://www.w3.org/2000/svg">
                   <path d="M12.001 0c-2.31 0-5.171 1.14-5.171 4.291 0 1.289.56 2.361.19 3.001-.47.799-1.54.54-2.88.54a2.91 2.91 0 0 0-3 3c0 .879.41 1.63.951 2.221a8.4 8.4 0 0 0 2.451 4.63c.7.67 1.48 1.16 2.16 1.35.321.1.66.151.98.151h3.33a4.67 4.67 0 0 1-1.38.5c-.75 0-1.5 0-1.5.75s.38 1 1 1.75c.421.49 1.5 2 4.5 2s3.38-.75 4.13-1.5c.37-.37.37-1.12.37-1.5s-.37-.75-.75-.75h-.75V11.25a3 3 0 0 1 3-3c1.34 0 2.411.26 2.881-.54-.37-.64.19-1.711.19-3.001 0-3.151-2.861-4.291-5.171-4.291-3 0-4 .5-5.5 1.5-1.5-1-2.5-1.5-4.5-1.5z" />
                 </svg>
               </div>

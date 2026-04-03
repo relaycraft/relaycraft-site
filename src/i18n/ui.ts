@@ -14,9 +14,10 @@ export const ui = {
     'nav.docs': 'Docs',
     'nav.plugins': 'Plugins',
     'nav.github': 'GitHub',
-    'hero.badge': 'v1.0.0 is now available',
+    'hero.badge': 'v1.0 is now available',
     'hero.title': 'AI-Native <br /> Web Traffic Debugging Tool',
-    'hero.subtitle': 'A powerful, modern AI-native web traffic debugging tool built with Tauri, React, and Rust. Intercept, analyze, and rewrite HTTP/HTTPS traffic with ease.',
+    'hero.subtitle': 'A professional-grade, AI-native network debugging tool built with Tauri, React, and Rust. Features a powerful proxy engine based on mitmproxy, with deep AI integration and a built-in MCP server for external AI agents.',
+    'hero.image': '/images/hero-ui.png',
     'hero.cta.download': 'Download for Free',
     'hero.cta.docs': 'View Documentation',
     'features.title': 'Powerful Features for <br /> Modern Development',
@@ -138,9 +139,10 @@ export const ui = {
     'nav.docs': '文档',
     'nav.plugins': '插件',
     'nav.github': 'GitHub',
-    'hero.badge': 'v1.0.0 现已发布',
+    'hero.badge': 'v1.0 现已发布',
     'hero.title': 'AI 原生 <br /> 网络流量调试工具',
-    'hero.subtitle': '基于 Tauri、React 和 Rust 构建的 AI 原生网络流量调试工具，轻松拦截、分析和重写 HTTP/HTTPS 流量。',
+    'hero.subtitle': '基于 Tauri、React 和 Rust 构建的专业级 AI 原生网络调试工具。内置基于 mitmproxy 的高性能代理引擎，支持深度 AI 集成与面向外部 AI Agent 的 MCP 服务。',
+    'hero.image': '/images/hero-ui.png',
     'hero.cta.download': '免费下载',
     'hero.cta.docs': '查看文档',
     'features.title': '面向现代开发的 <br /> 强大核心功能',
@@ -260,8 +262,8 @@ export const featureContent = {
   en: [
     {
       title: "Traffic Monitor",
-      description: "Real-time network traffic capture with high-performance list supporting massive requests. Full request/response details with image preview and syntax highlighting.",
-      bullets: ["Clear annotations for rule and script hits", "Powerful query syntax for multi-dimensional filtering", "One-click export to HAR or copy as cURL"],
+      description: "High-performance real-time traffic capture powered by mitmproxy. Supports massive request lists with full detail inspection, image previews, and syntax highlighting.",
+      bullets: ["Deep protocol analysis: HTTP/1.1, HTTP/2, and WebSockets", "Powerful query syntax for multi-dimensional filtering", "One-click export to cURL, HAR, or Relay Session (.relay)"],
       images: [
         "/images/features/capture-1-{lang}.png",
         "/images/features/capture-2-{lang}.png",
@@ -270,8 +272,8 @@ export const featureContent = {
     },
     {
       title: "Rules Engine",
-      description: "Revolutionary rule management interface. Manage traffic behavior with visual rule builder supporting content rewrite, header rewrite, map local, map remote, throttling, and request blocking.",
-      bullets: ["Visual rule builder with Yaml editing and one-click script conversion for power users", "Real-time match testing with instant feedback — no more blind regex writing", "Rules as files, directories as groups — easy sharing and export"],
+      description: "A revolutionary visual rule builder that manages traffic behavior without config files. Supports 6 powerful rule types for total control.",
+      bullets: ["Map Local/Remote, Rewrite Header/Body, Throttling, and Blocking", "Visual builder with optional YAML editing and matched feedback", "Rule-as-file structure for easy sharing and group management"],
       images: [
         "/images/features/rules-1-{lang}.png",
         "/images/features/rules-2-{lang}.png",
@@ -280,8 +282,8 @@ export const featureContent = {
     },
     {
       title: "AI Assistant",
-      description: "AI is everywhere — from request analysis to rule/script creation, from smart search to intelligent regex. Global Ctrl(⌘) + K command center makes it the tool that understands you best.",
-      bullets: ["Create rules or scripts with natural language", "Intelligent request analysis & diagnostics", "Natural language quick search in request list"],
+      description: "AI-native throughout the entire workflow. Global Ctrl(⌘) + K command center understands your intent and acts as your co-debugger.",
+      bullets: ["Natural language creation of rewrite rules and mitmproxy scripts", "One-click automated request diagnostics and root cause analysis", "Smart search for traffic sessions using plain English queries"],
       images: [
         "/images/features/ai-1-{lang}.png",
         "/images/features/ai-2-{lang}.png",
@@ -309,8 +311,8 @@ export const featureContent = {
     },
     {
       title: "Python Scripting",
-      description: "Proxy engine based on mitmproxy, natively supports mitmproxy script ecosystem. Python scripts enable complex capabilities beyond what rules can achieve.",
-      bullets: ["Native support for all mitmproxy APIs", "Built-in editor with syntax highlighting, write and run instantly", "Independent script logs, debugging scripts made easy"],
+      description: "Natively supports the full mitmproxy Python ecosystem. Write powerful custom logics for complex scenarios beyond visual rules.",
+      bullets: ["Full access to request/response lifecycle with Python API", "Built-in editor with syntax highlighting and independent script logs", "Reuse thousands of existing mitmproxy addons and scripts"],
       images: [
         "/images/features/scripting-1-{lang}.png",
         "/images/features/scripting-2-{lang}.png"
@@ -329,8 +331,8 @@ export const featureContent = {
   zh: [
     {
       title: "流量监控",
-      description: "实时捕获网络流量，高性能流量列表支持海量请求数据，提供请求与响应详情展示，支持图片预览与语法高亮。",
-      bullets: ["规则与脚本命中清晰标注", "强大查询语法支持多维度快速筛选", "一键导出为 HAR 或复制为 cURL"],
+      description: "由 mitmproxy 驱动的高性能实时流量捕获引擎。支持海量请求列表的极速滚动，提供详尽的解析视图、图片预览与语法高亮。",
+      bullets: ["深度协议分析：支持 HTTP/1.1, HTTP/2 及 WebSocket", "强大的查询语法，支持多维度组合条件快速筛选", "一键导出为 cURL, HAR 或 Relay 会话格式 (.relay)"],
       images: [
         "/images/features/capture-1-{lang}.png",
         "/images/features/capture-2-{lang}.png",
@@ -339,8 +341,8 @@ export const featureContent = {
     },
     {
       title: "规则引擎",
-      description: "颠覆传统的规则管理界面，通过可视化规则构建器轻松管理流量行为，支持内容重写、头部重写、本地映射、远程映射、弱网模拟及请求阻断。",
-      bullets: ["可视化规则构建，针对高级用户提供 Yaml 编辑及一键转脚本", "支持实时匹配测试，即时反馈拒绝盲写正则", "规则即文件，目录即分组，支持快速分享与导出"],
+      description: "颠覆传统的图形化规则构建器，无需手动编辑配置文件。内置 6 种规则类型，完美统管流量行为。",
+      bullets: ["Map Local/Remote, 内容/头部重写, 以及弱网模拟与阻断", "可视化构建流程，支持实时匹配反馈，告别盲推正则", "规则即文件，目录即分组，极易进行跨团队分享与同步"],
       images: [
         "/images/features/rules-1-{lang}.png",
         "/images/features/rules-2-{lang}.png"
@@ -348,8 +350,8 @@ export const featureContent = {
     },
     {
       title: "AI 助手",
-      description: "AI 全局感知，从请求分析到规则（脚本）创建，从智能搜索到智能正则，AI 无处不在，更有全局 Ctrl(⌘) + K 命令中心，做最懂你的工具。",
-      bullets: ["自然语言创建规则或脚本", "智能请求分析与诊断", "自然语言快速搜索请求列表"],
+      description: "AI 深度融入全流程工作流。全局 Ctrl(⌘) + K 命令中心即时理解意图，充当你的“云端”调试专家。",
+      bullets: ["自然语言创建重写规则与 mitmproxy 脚本", "一键式自动化请求故障诊断与根因分析", "使用自然语言直接搜索历史请求与特定流量序列"],
       images: [
         "/images/features/ai-1-{lang}.png",
         "/images/features/ai-2-{lang}.png",
@@ -377,8 +379,8 @@ export const featureContent = {
     },
     {
       title: "脚本支持",
-      description: "代理引擎基于 mitmproxy，原生支持 mitmproxy 脚本生态，通过 Python 脚本可实现规则难以实现的复杂能力。",
-      bullets: ["原生支持 mitmproxy 全部 API", "内置编辑器，支持语法高亮，即写即用", "脚本日志独立打印，调试脚本不再难"],
+      description: "原生支持实全量 mitmproxy Python 生态。通过 Python 脚本实现极其复杂的多步拦截与处理逻辑。",
+      bullets: ["通过 Python API 全面掌控请求/响应生命周期", "内置高亮编辑器与独立脚本日志，即写即用无需重启", "复用数以千计的现有 mitmproxy 插件与脚本库"],
       images: [
         "/images/features/scripting-1-{lang}.png",
         "/images/features/scripting-2-{lang}.png"
@@ -428,4 +430,39 @@ export const securityContent = {
     { title: "开源可审计", description: "核心代码 AGPLv3 开源，安全性经过社区验证，无后门。" },
     { title: "无遥测追踪", description: "拒绝任何形式的隐形数据收集、分析或追踪。" }
   ]
+};
+
+export const mcpContent = {
+  en: {
+    title: 'Built-in MCP Support',
+    subtitle: 'Bridge the gap between your network traffic and AI agents. RelayCraft features a built-in Model Context Protocol server.',
+    image: '/images/mcp-visual-en.png',
+    cta: 'Learn about MCP',
+    features: [
+      {
+        title: 'Live Traffic Context',
+        description: 'Let Claude or Cursor "read" your live sessions, search flows, and understand API behaviors instantly.'
+      },
+      {
+        title: 'Agent-Driven Debugging',
+        description: 'Empower your AI to create rules, replay requests, and manage traffic behavior using natural language.'
+      }
+    ]
+  },
+  zh: {
+    title: '内置 MCP 协议支持',
+    subtitle: '连接实时流量与 AI Agent 的桥梁。RelayCraft 深度集成 Model Context Protocol (MCP) 服务。',
+    image: '/images/mcp-visual-zh.png',
+    cta: '了解 MCP 协议',
+    features: [
+      {
+        title: '实时流量感知',
+        description: '让 Claude Desktop 或 Cursor 能够实时"读懂"你的抓包会话、搜索流数据并理解 API 行为。'
+      },
+      {
+        title: '智能体驱动测试',
+        description: '授权你的 AI Agent 使用自然语言创建拦截规则、重发请求，实现自动化交互式调试。'
+      }
+    ]
+  }
 };

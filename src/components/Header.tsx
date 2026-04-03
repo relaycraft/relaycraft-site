@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Github, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
+import { siGithub } from 'simple-icons';
 import { ThemeToggle } from './ThemeToggle';
 import { LanguageSwitcher } from './LanguageSwitcher';
 
@@ -53,7 +54,9 @@ export const Header = ({ lang, content }: HeaderProps) => {
               className="p-2 text-muted-foreground hover:text-foreground transition-colors hidden md:block"
               title="GitHub"
             >
-              <Github className="h-5 w-5" />
+              <svg viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5" aria-hidden="true">
+                <path d={siGithub.path} />
+              </svg>
             </a>
             <ThemeToggle />
             <LanguageSwitcher currentLang={lang} />
@@ -95,7 +98,9 @@ export const Header = ({ lang, content }: HeaderProps) => {
             <a href={`/${lang}/plugins`} className="text-muted-foreground hover:text-foreground" onClick={() => setIsMenuOpen(false)}>{content['nav.plugins']}</a>
             <a href="https://docs.relaycraft.dev" className="text-muted-foreground hover:text-foreground" onClick={() => setIsMenuOpen(false)}>{content['nav.docs']}</a>
             <a href="https://github.com/relaycraft/relaycraft" className="text-muted-foreground hover:text-foreground flex items-center gap-2" onClick={() => setIsMenuOpen(false)}>
-              <Github className="h-4 w-4" />
+              <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4" aria-hidden="true">
+                <path d={siGithub.path} />
+              </svg>
               GitHub
             </a>
           </nav>

@@ -2,12 +2,13 @@
 import Layout from '../../layouts/Layout.astro';
 import { Header } from '../../components/Header';
 import { Hero } from '../../components/Hero';
+import { MCPSection } from '../../components/MCPSection';
 import { Features } from '../../components/Features';
 import { UserPersonas } from '../../components/UserPersonas';
 import { Security } from '../../components/Security';
 import { DownloadSection } from '../../components/DownloadSection';
 import { Footer } from '../../components/Footer';
-import { ui, featureContent, languages, personaContent, securityContent } from '../../i18n/ui';
+import { ui, featureContent, languages, personaContent, securityContent, mcpContent } from '../../i18n/ui';
 import { getLatestRelease } from '../../lib/github';
 
 export function getStaticPaths() {
@@ -25,6 +26,7 @@ const content = ui[currentLang];
 const featuresList = featureContent[currentLang];
 const personas = personaContent[currentLang];
 const securities = securityContent[currentLang];
+const mcpData = mcpContent[currentLang];
 
 const pageTitle = currentLang === 'en' 
   ? "RelayCraft - AI-Native Web Traffic Debugging Tool" 
@@ -41,11 +43,12 @@ const latestRelease = await getLatestRelease();
   
   <main>
     <Hero client:load content={content} lang={currentLang} />
+    <MCPSection client:visible mcpData={mcpData} />
     <Features client:visible content={content} featuresList={featuresList} lang={currentLang} />
     <Security client:visible content={content} securityList={securities} />
     <UserPersonas client:visible content={content} personaList={personas} />
     <DownloadSection client:visible content={content} latestRelease={latestRelease} />
   </main>
   
-  <Footer content={content} />
+  <Footer lang={currentLang} content={content} />
 </Layout>

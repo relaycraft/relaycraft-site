@@ -106,14 +106,25 @@ export const Features = ({ content, featuresList, lang = 'en' }: FeaturesProps) 
 
                   {/* Bullets */}
                   {feature.bullets && (
-                    <ul className="space-y-4 pt-4 text-left inline-block md:block">
+                    <div className="grid grid-cols-1 gap-4 pt-6 text-left">
                       {feature.bullets.map((bullet, bIdx) => (
-                        <li key={bIdx} className="flex items-center text-base font-medium text-foreground/80">
-                          <CheckCircle2 className="h-5 w-5 mr-3 text-primary/70 shrink-0" />
-                          {bullet}
-                        </li>
+                        <motion.div 
+                          key={bIdx} 
+                          initial={{ opacity: 0, x: -10 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          viewport={{ once: true }}
+                          transition={{ delay: 0.3 + bIdx * 0.1 }}
+                          className="flex items-center gap-3 p-3 rounded-xl bg-secondary/30 border border-border/40 hover:bg-secondary/50 transition-colors"
+                        >
+                          <div className="h-6 w-6 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
+                            <CheckCircle2 className="h-4 w-4 text-primary" />
+                          </div>
+                          <span className="text-sm font-semibold text-foreground/90 leading-tight">
+                            {bullet}
+                          </span>
+                        </motion.div>
                       ))}
-                    </ul>
+                    </div>
                   )}
                 </div>
 

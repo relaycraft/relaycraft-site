@@ -30,36 +30,36 @@ const pageDescription = content['plugins.subtitle'];
 <Layout title={pageTitle} description={pageDescription} lang={currentLang}>
   <Header client:load lang={currentLang} content={content} />
 
-  <main className="pt-32 pb-20 overflow-hidden">
-    <div className="container px-4 md:px-6 mx-auto">
+  <main class="pt-32 pb-20 overflow-hidden">
+    <div class="container px-4 md:px-6 mx-auto">
       <!-- Hero Section -->
-      <section className="text-center mb-16">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-6 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium">
+      <section class="text-center mb-16">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 mb-6 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.6 2.7a10 10 0 1 0 5.7 5.7"/><circle cx="12" cy="12" r="2"/><path d="M13.4 10.6 19 5"/></svg>
           {plugins.length} {currentLang === 'en' ? 'plugins available' : '个插件可用'}
         </div>
-        <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70">
+        <h1 class="text-4xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70">
           {content['plugins.title']}
         </h1>
-        <p className="text-xl text-muted-foreground font-medium max-w-2xl mx-auto">
+        <p class="text-xl text-muted-foreground font-medium max-w-2xl mx-auto">
           {content['plugins.subtitle']}
         </p>
       </section>
 
       <!-- Plugin Grid -->
       {plugins.length > 0 ? (
-        <section className="mb-20">
+        <section class="mb-20">
           {categories.map((category) => (
-            <div className="mb-12">
-              <div className="flex items-center gap-3 mb-6">
-                <h2 className="text-2xl font-bold tracking-tight">
+            <div class="mb-12">
+              <div class="flex items-center gap-3 mb-6">
+                <h2 class="text-2xl font-bold tracking-tight">
                   {content[`plugins.category.${category}` as keyof typeof content] || category}
                 </h2>
-                <span className="text-sm text-muted-foreground bg-muted/50 px-2.5 py-0.5 rounded-full">
+                <span class="text-sm text-muted-foreground bg-muted/50 px-2.5 py-0.5 rounded-full">
                   {grouped[category].length}
                 </span>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {grouped[category].map((plugin, idx) => (
                   <PluginCard
                     client:visible
@@ -74,34 +74,34 @@ const pageDescription = content['plugins.subtitle'];
           ))}
         </section>
       ) : (
-        <section className="text-center py-20">
-          <div className="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-muted/50 text-muted-foreground mb-6">
+        <section class="text-center py-20">
+          <div class="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-muted/50 text-muted-foreground mb-6">
             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
           </div>
-          <p className="text-muted-foreground text-lg">{content['plugins.empty']}</p>
+          <p class="text-muted-foreground text-lg">{content['plugins.empty']}</p>
         </section>
       )}
 
       <!-- CTA: Build your own plugin -->
-      <section className="relative p-8 md:p-12 rounded-3xl bg-secondary/30 border border-white/5 overflow-hidden text-center">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -mr-32 -mt-32"></div>
-        <div className="absolute bottom-0 left-0 w-48 h-48 bg-primary/5 rounded-full blur-3xl -ml-24 -mb-24"></div>
-        <div className="relative z-10">
-          <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 border border-primary/20 text-primary mb-6">
+      <section class="relative p-8 md:p-12 rounded-3xl bg-secondary/30 border border-white/5 overflow-hidden text-center">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -mr-32 -mt-32"></div>
+        <div class="absolute bottom-0 left-0 w-48 h-48 bg-primary/5 rounded-full blur-3xl -ml-24 -mb-24"></div>
+        <div class="relative z-10">
+          <div class="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 border border-primary/20 text-primary mb-6">
             <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"/></svg>
           </div>
-          <h3 className="text-2xl md:text-3xl font-bold mb-3">{content['plugins.cta.develop']}</h3>
-          <p className="text-muted-foreground text-lg mb-8 max-w-xl mx-auto">
+          <h3 class="text-2xl md:text-3xl font-bold mb-3">{content['plugins.cta.develop']}</h3>
+          <p class="text-muted-foreground text-lg mb-8 max-w-xl mx-auto">
             {content['plugins.cta.develop.desc']}
           </p>
           <a
             href="https://docs.relaycraft.dev"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex h-11 items-center justify-center rounded-lg bg-primary px-6 text-sm font-medium text-primary-foreground shadow transition-all duration-300 hover:bg-primary/90 hover:shadow-[0_0_24px_-4px_rgba(59,130,246,0.5)]"
+            class="inline-flex h-11 items-center justify-center rounded-lg bg-primary px-6 text-sm font-medium text-primary-foreground shadow transition-all duration-300 hover:bg-primary/90 hover:shadow-[0_0_24px_-4px_rgba(59,130,246,0.5)]"
           >
             {content['plugins.cta.develop.button']}
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="ml-2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
           </a>
         </div>
       </section>

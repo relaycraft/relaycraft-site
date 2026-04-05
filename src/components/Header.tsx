@@ -42,7 +42,7 @@ export const Header = ({ lang, content }: HeaderProps) => {
           )}
           <a href={`/${lang}/blog`} className="hover:text-foreground transition-colors">{content['nav.blog']}</a>
           <a href={`/${lang}/plugins`} className="hover:text-foreground transition-colors">{content['nav.plugins']}</a>
-          <a href="https://docs.relaycraft.dev" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">{content['nav.docs']}</a>
+          <a href="https://docs.relaycraft.dev" className="hover:text-foreground transition-colors">{content['nav.docs']}</a>
         </nav>
 
         <div className="flex items-center gap-2 md:gap-4">

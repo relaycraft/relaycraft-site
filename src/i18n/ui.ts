@@ -139,7 +139,7 @@ export const ui = {
     'nav.docs': '文档',
     'nav.plugins': '插件',
     'nav.github': 'GitHub',
-    'hero.badge': 'v1.0 现已发布',
+    'hero.badge': 'v1.0.0正式版现已发布',
     'hero.title': 'AI 原生 <br /> 网络流量调试工具',
     'hero.subtitle': '基于 Tauri、React 和 Rust 构建的专业级 AI 原生网络调试工具。内置基于 mitmproxy 的高性能代理引擎，支持深度 AI 集成与面向外部 AI Agent 的 MCP 服务。',
     'hero.image': '/images/hero-ui.png',

@@ -33,7 +33,7 @@ export const Footer = ({ lang, content }: FooterProps) => {
               <li><a href={`/${currentLang}/#features`} className="text-muted-foreground hover:text-primary transition-colors">{content['nav.features']}</a></li>
               <li><a href={`/${currentLang}/#download`} className="text-muted-foreground hover:text-primary transition-colors">{content['nav.download']}</a></li>
               <li><a href="https://github.com/relaycraft/relaycraft/releases" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">{content['footer.changelog']}</a></li>
-              <li><a href="https://docs.relaycraft.dev" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">{content['nav.docs']}</a></li>
+              <li><a href="https://docs.relaycraft.dev" className="text-muted-foreground hover:text-primary transition-colors">{content['nav.docs']}</a></li>
               <li><a href={`/${currentLang}/plugins`} className="text-muted-foreground hover:text-primary transition-colors">{content['nav.plugins']}</a></li>
             </ul>
           </div>

@@ -6,6 +6,11 @@
     <meta http-equiv="refresh" content="0;url=/en/" />
     <script is:inline>
       const getPreferredLanguage = () => {
+        try {
+          const pref = localStorage.getItem('preferred-language');
+          if (pref === 'en' || pref === 'zh') return pref;
+        } catch (e) {}
+
         const languages = window.navigator.languages || [window.navigator.language];
         for (const lang of languages) {
           if (lang.startsWith('zh')) return 'zh';

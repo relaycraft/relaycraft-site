@@ -25,7 +25,9 @@ export const LanguageSwitcher = ({ currentLang }: LanguageSwitcherProps) => {
         segments.unshift(newLang);
     }
     
+    try { localStorage.setItem('preferred-language', newLang); } catch (e) {}
     window.location.href = `/${segments.join('/')}`;
+
   };
 
   return (

@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
 
 import react from '@astrojs/react';
 import tailwindcss from '@tailwindcss/vite';
@@ -7,7 +8,7 @@ import tailwindcss from '@tailwindcss/vite';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://relaycraft.dev',
-  integrations: [react()],
+  integrations: [react(), sitemap()],
   i18n: {
     defaultLocale: "en",
     locales: ["en", "zh"],

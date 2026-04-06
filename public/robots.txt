@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://relaycraft.dev/sitemap-index.xml

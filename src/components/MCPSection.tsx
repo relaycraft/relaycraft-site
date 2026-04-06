@@ -1,4 +1,3 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 import { Eye, Zap, ArrowRight, Share2, Network } from 'lucide-react';
 import { MediaPlaceholder } from './MediaPlaceholder';

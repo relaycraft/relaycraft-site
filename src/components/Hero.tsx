@@ -1,4 +1,3 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 import { Download, Terminal } from 'lucide-react';
 import { MediaPlaceholder } from './MediaPlaceholder';

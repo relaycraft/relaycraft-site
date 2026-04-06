@@ -2,7 +2,7 @@
 import Layout from '../../../layouts/Layout.astro';
 import { Header } from '../../../components/Header';
 import { Footer } from '../../../components/Footer';
-import { getCollection, type CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
 import { ui } from '../../../i18n/ui';
 
 export async function getStaticPaths() {
@@ -11,10 +11,6 @@ export async function getStaticPaths() {
     params: { lang: entry.data.lang || 'en', slug: entry.slug },
     props: { entry },
   }));
-}
-
-interface Props {
-  entry: CollectionEntry<'blog'>;
 }
 
 const { entry } = Astro.props;
@@ -39,13 +35,6 @@ function calculateReadingTime(content: string) {
   return Math.ceil(words / wordsPerMinute);
 }
 
-// Find the alternate language version of this post
-const allPosts = await getCollection('blog');
-const alternatePost = allPosts.find(p => 
-  p.slug !== entry.slug && 
-  p.data.lang !== currentLang &&
-  (p.slug.includes('why-i-built') && entry.slug.includes('why-i-built')) // Simple matching logic for now
-);
 ---
 
 <Layout title={`${data.title} - RelayCraft Blog`} description={data.description} lang={currentLang}>

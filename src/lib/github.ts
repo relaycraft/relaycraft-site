@@ -6,6 +6,7 @@ export interface GithubRelease {
         exe?: string;
         msi?: string;
         deb?: string;
+        rpm?: string;
         appImage?: string;
         sha256?: string;
     };
@@ -33,6 +34,8 @@ export async function getLatestRelease(): Promise<GithubRelease | null> {
                 assets.msi = asset.browser_download_url;
             } else if (assetName.endsWith('.deb')) {
                 assets.deb = asset.browser_download_url;
+            } else if (assetName.endsWith('.rpm')) {
+                assets.rpm = asset.browser_download_url;
             } else if (assetName.endsWith('.appimage')) {
                 assets.appImage = asset.browser_download_url;
             } else if (assetName.includes('sha256')) {

@@ -19,6 +19,7 @@ export const DownloadSection = ({ content, latestRelease: buildTimeRelease }: Do
 
   const getDefaultLinuxKey = (currentRelease: GithubRelease | null) => {
     if (currentRelease?.assets.deb) return 'deb';
+    if (currentRelease?.assets.rpm) return 'rpm';
     if (currentRelease?.assets.appImage) return 'appImage';
     return 'deb';
   };
@@ -39,29 +40,37 @@ export const DownloadSection = ({ content, latestRelease: buildTimeRelease }: Do
   }, []);
 
   const windowsOptions = [
-    { key: 'exe', formatLabel: 'exe', url: release?.assets.exe || fallbackUrl },
+    ...(release?.assets.exe ? [{ key: 'exe', formatLabel: 'exe', url: release.assets.exe }] : []),
     ...(release?.assets.msi ? [{ key: 'msi', formatLabel: 'msi', url: release.assets.msi }] : []),
   ];
 
   const linuxOptions = [
-    { key: 'deb', formatLabel: 'deb', url: release?.assets.deb || fallbackUrl },
-    { key: 'appImage', formatLabel: 'AppImage', url: release?.assets.appImage || fallbackUrl },
+    ...(release?.assets.deb ? [{ key: 'deb', formatLabel: 'deb', url: release.assets.deb }] : []),
+    ...(release?.assets.rpm ? [{ key: 'rpm', formatLabel: 'rpm', url: release.assets.rpm }] : []),
+    ...(release?.assets.appImage ? [{ key: 'appImage', formatLabel: 'AppImage', url: release.assets.appImage }] : []),
   ];
 
+  const normalizedWindowsOptions = windowsOptions.length > 0
+    ? windowsOptions
+    : [{ key: 'exe', formatLabel: 'exe', url: fallbackUrl }];
+  const normalizedLinuxOptions = linuxOptions.length > 0
+    ? linuxOptions
+    : [{ key: 'deb', formatLabel: 'deb', url: fallbackUrl }];
+
   useEffect(() => {
-    const hasWindowsOption = windowsOptions.some((option) => option.key === selectedWindows);
+    const hasWindowsOption = normalizedWindowsOptions.some((option) => option.key === selectedWindows);
     if (!hasWindowsOption) {
       setSelectedWindows(getDefaultWindowsKey(release));
     }
 
-    const hasLinuxOption = linuxOptions.some((option) => option.key === selectedLinux);
+    const hasLinuxOption = normalizedLinuxOptions.some((option) => option.key === selectedLinux);
     if (!hasLinuxOption) {
       setSelectedLinux(getDefaultLinuxKey(release));
     }
-  }, [release, selectedWindows, selectedLinux, windowsOptions, linuxOptions]);
+  }, [release, selectedWindows, selectedLinux, normalizedWindowsOptions, normalizedLinuxOptions]);
 
-  const selectedWindowsOption = windowsOptions.find((option) => option.key === selectedWindows) || windowsOptions[0];
-  const selectedLinuxOption = linuxOptions.find((option) => option.key === selectedLinux) || linuxOptions[0];
+  const selectedWindowsOption = normalizedWindowsOptions.find((option) => option.key === selectedWindows) || normalizedWindowsOptions[0];
+  const selectedLinuxOption = normalizedLinuxOptions.find((option) => option.key === selectedLinux) || normalizedLinuxOptions[0];
   const releasePageUrl = release?.releaseUrl || fallbackUrl;
   const macUrl = release?.assets.dmg || fallbackUrl;
 
@@ -145,10 +154,10 @@ export const DownloadSection = ({ content, latestRelease: buildTimeRelease }: Do
               <h3 className="text-2xl font-bold mb-2 break-keep">{content['download.windows']}</h3>
               <span className="text-sm text-muted-foreground mb-8 flex-1">{content['download.windows.desc']}</span>
 
-              {windowsOptions.length > 1 && (
+              {normalizedWindowsOptions.length > 1 && (
                 <>
                   <div className="w-full mb-4 rounded-xl border border-white/10 bg-muted/35 p-1 grid grid-cols-2 gap-1">
-                    {windowsOptions.map((option) => {
+                    {normalizedWindowsOptions.map((option) => {
                       const active = option.key === selectedWindowsOption.key;
                       return (
                         <button
@@ -202,10 +211,10 @@ export const DownloadSection = ({ content, latestRelease: buildTimeRelease }: Do
               <h3 className="text-2xl font-bold mb-2 break-keep">{content['download.linux']}</h3>
               <span className="text-sm text-muted-foreground mb-8 flex-1">{content['download.linux.desc']}</span>
 
-              {linuxOptions.length > 1 && (
+              {normalizedLinuxOptions.length > 1 && (
                 <>
-                  <div className="w-full mb-4 rounded-xl border border-white/10 bg-muted/35 p-1 grid grid-cols-2 gap-1">
-                    {linuxOptions.map((option) => {
+                  <div className={`w-full mb-4 rounded-xl border border-white/10 bg-muted/35 p-1 grid ${normalizedLinuxOptions.length === 2 ? 'grid-cols-2' : 'grid-cols-3'} gap-1`}>
+                    {normalizedLinuxOptions.map((option) => {
                       const active = option.key === selectedLinuxOption.key;
                       return (
                         <button

@@ -28,17 +28,44 @@ const personas = personaContent[currentLang];
 const securities = securityContent[currentLang];
 const mcpData = mcpContent[currentLang];
 
-const pageTitle = currentLang === 'en' 
-  ? "RelayCraft - AI-Native Web Traffic Debugging Tool" 
+const pageTitle = currentLang === 'en'
+  ? "RelayCraft - AI-Native Web Traffic Debugging Tool"
   : "RelayCraft - AI 原生网络流量调试工具";
 
-const pageDescription = content['hero.subtitle'];
+const pageDescription = currentLang === 'en'
+  ? "RelayCraft is an AI-native Charles and Whistle alternative for intercepting, debugging, and modifying HTTP/HTTPS traffic with local-first privacy."
+  : "RelayCraft 是一款 AI 原生网络抓包与调试工具，可作为 Charles / Whistle 替代方案，支持本地优先的 HTTP/HTTPS 流量拦截、分析与修改。";
+
+const pageKeywords = currentLang === 'en'
+  ? "charles alternative, whistle alternative, web debugging proxy, http traffic inspector, https debugging tool, api debugging proxy, relaycraft"
+  : "Charles 替代, Whistle 替代, 抓包工具, HTTP 调试, HTTPS 调试, API 调试工具, 网络代理调试, RelayCraft";
+
+const softwareApplicationSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "RelayCraft",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "macOS, Windows, Linux",
+  "url": `https://relaycraft.dev/${currentLang}/`,
+  "description": pageDescription,
+  "alternateName": currentLang === 'en'
+    ? ["Charles alternative", "Whistle alternative", "HTTP debugging proxy"]
+    : ["Charles 替代方案", "Whistle 替代方案", "HTTP 调试代理"],
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  }
+};
 
 // Fetch latest release data
 const latestRelease = await getLatestRelease();
 ---
 
-<Layout title={pageTitle} description={pageDescription} lang={currentLang}>
+<Layout title={pageTitle} description={pageDescription} keywords={pageKeywords} lang={currentLang} image={currentLang === 'zh' ? '/images/hero-zh-poster.png' : '/images/hero-en-poster.png'}>
+  <Fragment slot="head">
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(softwareApplicationSchema)} />
+  </Fragment>
   <Header client:load lang={currentLang} content={content} />
   
   <main>

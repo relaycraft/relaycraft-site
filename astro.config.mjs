@@ -6,7 +6,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://relaycraft.io',
+  site: 'https://relaycraft.dev',
   integrations: [react()],
   i18n: {
     defaultLocale: "en",

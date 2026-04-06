@@ -14,7 +14,7 @@ export async function GET(context: APIContext) {
   return rss({
     title: 'RelayCraft Blog',
     description: 'Development updates, technical deep-dives, and insights from the RelayCraft team.',
-    site: context.site ?? 'https://relaycraft.io',
+    site: context.site ?? 'https://relaycraft.dev',
     items: posts.map((post) => ({
       title: post.data.title,
       pubDate: post.data.pubDate,
@@ -25,7 +25,7 @@ export async function GET(context: APIContext) {
     })),
     customData: `<language>en-us</language>
 <copyright>© ${new Date().getFullYear()} RelayCraft</copyright>
-<managingEditor>team@relaycraft.io (RelayCraft Team)</managingEditor>
-<webMaster>team@relaycraft.io (RelayCraft Team)</webMaster>`,
+<managingEditor>admin@relaycraft.dev (RelayCraft Team)</managingEditor>
+<webMaster>admin@relaycraft.dev (RelayCraft Team)</webMaster>`,
   });
 }

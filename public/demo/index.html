@@ -26,579 +26,170 @@
       --orange: #ffa657;
     }
 
-    html, body {
-      height: 100%;
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Inter', -apple-system, sans-serif;
-      overflow: hidden;
-    }
+    html, body { height: 100%; background: var(--bg); color: var(--text); font-family: 'Inter', -apple-system, sans-serif; overflow: hidden; }
 
     .deck { width: 100vw; height: 100vh; position: relative; }
 
     .slide {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
       padding: 56px 72px;
-      opacity: 0;
-      pointer-events: none;
-      transform: translateX(40px);
+      opacity: 0; pointer-events: none; transform: translateX(40px);
       transition: opacity 0.4s ease, transform 0.4s ease;
+      overflow-y: auto; max-height: 100vh;
     }
-    .slide.active {
-      opacity: 1;
-      pointer-events: auto;
-      transform: translateX(0);
-    }
+    .slide.active { opacity: 1; pointer-events: auto; transform: translateX(0); }
+    .slide::-webkit-scrollbar { width: 4px; }
+    .slide::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
     /* nav */
-    .dots {
-      position: fixed;
-      bottom: 28px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 8px;
-      z-index: 100;
-    }
-    .dot {
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      background: var(--border);
-      cursor: pointer;
-      transition: all 0.25s;
-      border: none;
-    }
-    .dot.active { background: var(--accent); transform: scale(1.4); }
+    .dots { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); display: flex; gap: 7px; z-index: 100; }
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--border); cursor: pointer; transition: all 0.25s; border: none; }
+    .dot.active { background: var(--accent); transform: scale(1.5); }
 
-    .arrow {
-      position: fixed;
-      top: 50%;
-      transform: translateY(-50%);
-      background: var(--bg3);
-      border: 1px solid var(--border);
-      color: var(--text2);
-      width: 48px; height: 48px;
-      border-radius: 50%;
-      cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 22px;
-      z-index: 100;
-      transition: all 0.2s;
-    }
+    .arrow { position: fixed; top: 50%; transform: translateY(-50%); background: var(--bg3); border: 1px solid var(--border); color: var(--text2); width: 46px; height: 46px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px; z-index: 100; transition: all 0.2s; }
     .arrow:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
-    .arrow.prev { left: 20px; }
-    .arrow.next { right: 20px; }
+    .arrow.prev { left: 18px; }
+    .arrow.next { right: 18px; }
     .arrow:disabled { opacity: 0.15; cursor: default; }
     .arrow:disabled:hover { background: var(--bg3); color: var(--text2); border-color: var(--border); }
 
-    .progress {
-      position: fixed;
-      top: 0; left: 0;
-      height: 3px;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      transition: width 0.35s ease;
-      z-index: 100;
-    }
+    .progress { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width 0.35s ease; z-index: 100; }
+    .slide-num { position: fixed; bottom: 24px; right: 32px; font-size: 11px; color: var(--text2); font-family: 'JetBrains Mono', monospace; z-index: 100; }
+    .logo { position: fixed; top: 18px; left: 32px; font-size: 13px; font-weight: 800; color: var(--accent); z-index: 100; }
+    .kbd-hint { position: fixed; top: 18px; right: 32px; font-size: 10px; color: var(--text2); z-index: 100; display: flex; align-items: center; gap: 4px; }
+    kbd { background: var(--bg3); border: 1px solid var(--border); border-radius: 3px; padding: 1px 5px; font-family: 'JetBrains Mono', monospace; font-size: 10px; }
 
-    .slide-num {
-      position: fixed;
-      bottom: 28px;
-      right: 36px;
-      font-size: 12px;
-      color: var(--text2);
-      font-family: 'JetBrains Mono', monospace;
-      z-index: 100;
-    }
+    .label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; color: var(--accent); text-transform: uppercase; margin-bottom: 14px; }
+    h2 { font-size: clamp(24px, 2.8vw, 36px); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 6px; }
+    .sub { font-size: 15px; color: var(--text2); margin-bottom: 32px; }
 
-    .logo {
-      position: fixed;
-      top: 20px;
-      left: 36px;
-      font-size: 14px;
-      font-weight: 800;
-      color: var(--accent);
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .kbd-hint {
-      position: fixed;
-      top: 20px;
-      right: 36px;
-      font-size: 11px;
-      color: var(--text2);
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-    kbd {
-      background: var(--bg3);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 1px 5px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-    }
-
-    /* ── common ── */
-    .label {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      color: var(--accent);
-      text-transform: uppercase;
-      margin-bottom: 16px;
-    }
-    h2 {
-      font-size: clamp(26px, 3vw, 38px);
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      margin-bottom: 8px;
-    }
-    .sub {
-      font-size: 16px;
-      color: var(--text2);
-      margin-bottom: 36px;
-    }
-
-    /* ── step badge ── */
-    .step-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(88,166,255,0.1);
-      border: 1px solid rgba(88,166,255,0.25);
-      color: var(--accent);
-      font-size: 12px;
-      font-weight: 600;
-      padding: 5px 14px;
-      border-radius: 999px;
-      margin-bottom: 24px;
-    }
-
-    /* ── code blocks ── */
-    pre {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 16px 20px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 13px;
-      line-height: 1.7;
-      color: var(--text);
-      width: 100%;
-      max-width: 720px;
-      overflow-x: auto;
-    }
-    pre .c { color: var(--text2); }
-    pre .k { color: var(--purple); }
-    pre .s { color: var(--green); }
-    pre .n { color: var(--orange); }
-    pre .cm { color: var(--text2); font-style: italic; }
-    pre .comment { color: var(--text2); font-style: italic; }
-
-    /* ── hero ── */
-    .hero-title {
-      font-size: clamp(36px, 5vw, 64px);
-      font-weight: 900;
-      letter-spacing: -0.03em;
-      margin-bottom: 16px;
-      text-align: center;
-    }
+    /* hero */
+    .hero-title { font-size: clamp(34px, 4.5vw, 60px); font-weight: 900; letter-spacing: -0.03em; margin-bottom: 14px; text-align: center; }
     .hero-title .hi { color: var(--accent); }
-    .hero-sub {
-      font-size: clamp(15px, 1.8vw, 19px);
-      color: var(--text2);
-      text-align: center;
-      max-width: 560px;
-      line-height: 1.7;
-      margin-bottom: 40px;
-    }
-    .hero-stack {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .tech-tag {
-      background: var(--bg3);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 5px 12px;
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--text2);
-    }
+    .hero-sub { font-size: clamp(14px, 1.6vw, 18px); color: var(--text2); text-align: center; max-width: 540px; line-height: 1.7; margin-bottom: 36px; }
+    .hero-stack { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+    .tech-tag { background: var(--bg3); border: 1px solid var(--border); border-radius: 5px; padding: 4px 10px; font-size: 11px; font-weight: 500; color: var(--text2); }
 
-    /* ── flow steps ── */
-    .flow-steps {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      width: 100%;
-      max-width: 640px;
-    }
-    .flow-step {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 14px 20px;
-      transition: border-color 0.2s;
-    }
+    /* flow steps */
+    .flow-steps { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 600px; }
+    .flow-step { display: flex; align-items: center; gap: 14px; background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 12px 18px; transition: border-color 0.2s; }
     .flow-step:hover { border-color: var(--accent); }
-    .step-num {
-      width: 28px; height: 28px;
-      border-radius: 50%;
-      background: rgba(88,166,255,0.15);
-      border: 1px solid rgba(88,166,255,0.3);
-      color: var(--accent);
-      font-size: 13px;
-      font-weight: 700;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-    }
-    .step-text {
-      font-size: 14px;
-      line-height: 1.5;
-    }
+    .step-num { width: 26px; height: 26px; border-radius: 50%; background: rgba(88,166,255,0.15); border: 1px solid rgba(88,166,255,0.3); color: var(--accent); font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .step-text { font-size: 13px; line-height: 1.5; }
     .step-text strong { color: var(--text); font-weight: 600; }
     .step-text span { color: var(--text2); }
 
-    /* ── screenshot placeholder ── */
-    .ui-mock {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      overflow: hidden;
-      width: 100%;
-      max-width: 860px;
-    }
-    .ui-bar {
-      background: var(--bg3);
-      padding: 10px 14px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      border-bottom: 1px solid var(--border);
-    }
-    .ui-dot { width: 10px; height: 10px; border-radius: 50%; }
-    .ui-body { padding: 20px; }
-
     /* traffic mock */
-    .req-list { display: flex; flex-direction: column; gap: 4px; }
-    .req-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 7px 10px;
-      border-radius: 6px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
-      cursor: default;
-    }
+    .ui-mock { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; width: 100%; max-width: 840px; }
+    .ui-bar { background: var(--bg3); padding: 9px 14px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--border); }
+    .ui-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .ui-body { padding: 18px; }
+    .req-list { display: flex; flex-direction: column; gap: 3px; }
+    .req-row { display: flex; align-items: center; gap: 9px; padding: 6px 10px; border-radius: 5px; font-family: 'JetBrains Mono', monospace; font-size: 12px; }
     .req-row:hover { background: var(--bg3); }
     .req-row.sel { background: rgba(88,166,255,0.1); border: 1px solid rgba(88,166,255,0.3); }
-    .m-tag {
-      padding: 1px 6px;
-      border-radius: 4px;
-      font-size: 10px;
-      font-weight: 700;
-      flex-shrink: 0;
-    }
+    .m-tag { padding: 1px 6px; border-radius: 3px; font-size: 10px; font-weight: 700; flex-shrink: 0; }
     .m-get { background: rgba(63,185,80,0.15); color: var(--green); }
     .m-post { background: rgba(88,166,255,0.15); color: var(--accent); }
     .m-put { background: rgba(210,153,34,0.15); color: var(--yellow); }
     .m-del { background: rgba(248,81,73,0.15); color: var(--red); }
     .url-text { flex: 1; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .status-tag { font-size: 11px; font-weight: 600; flex-shrink: 0; }
     .s-2 { color: var(--green); }
-    .s-3 { color: var(--yellow); }
     .s-4 { color: var(--orange); }
     .s-5 { color: var(--red); }
     .type-text { color: var(--text2); font-size: 11px; flex-shrink: 0; }
-
-    /* detail panel mock */
-    .detail-panel {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-top: 16px;
-    }
-    .panel-box {
-      background: var(--bg3);
-      border-radius: 8px;
-      padding: 12px;
-    }
-    .panel-title {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--text2);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 8px;
-    }
-    .json-line { font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.6; }
+    .detail-panel { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+    .panel-box { background: var(--bg3); border-radius: 7px; padding: 11px; }
+    .panel-title { font-size: 10px; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
+    .json-line { font-family: 'JetBrains Mono', monospace; font-size: 11px; line-height: 1.6; }
     .json-key { color: var(--purple); }
     .json-str { color: var(--green); }
     .json-num { color: var(--orange); }
 
-    /* ── rules ── */
-    .rules-layout {
-      display: grid;
-      grid-template-columns: 1fr 1.2fr;
-      gap: 32px;
-      width: 100%;
-      max-width: 900px;
-      align-items: start;
-    }
-    .rule-types { display: flex; flex-direction: column; gap: 8px; }
-    .rule-type {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px 16px;
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      cursor: default;
-      transition: all 0.2s;
-    }
-    .rule-type:hover, .rule-type.sel { border-color: var(--accent); background: rgba(88,166,255,0.05); }
-    .rule-emoji { font-size: 20px; }
-    .rule-name { font-size: 14px; font-weight: 600; }
-    .rule-desc { font-size: 12px; color: var(--text2); }
+    /* rules overview */
+    .rules-grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; width: 100%; max-width: 900px; }
+    .rule-overview { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 20px; transition: border-color 0.2s; }
+    .rule-overview:hover { border-color: var(--accent); }
+    .rule-overview-header { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+    .rule-overview-icon { font-size: 24px; }
+    .rule-overview-name { font-size: 15px; font-weight: 700; }
+    .rule-overview-desc { font-size: 13px; color: var(--text2); line-height: 1.6; }
+    .rule-overview-example { margin-top: 10px; background: var(--bg3); border-radius: 6px; padding: 8px 12px; font-size: 11px; font-family: 'JetBrains Mono', monospace; color: var(--orange); line-height: 1.5; }
 
-    .rule-panel {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      overflow: hidden;
-    }
-    .rule-panel-header {
-      background: var(--bg3);
-      padding: 12px 16px;
-      border-bottom: 1px solid var(--border);
-      font-size: 13px;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .rule-form { padding: 16px; display: flex; flex-direction: column; gap: 12px; }
-    .field { display: flex; flex-direction: column; gap: 5px; }
-    .field-label { font-size: 11px; font-weight: 600; color: var(--text2); text-transform: uppercase; letter-spacing: 0.06em; }
-    .field input, .field textarea, .field select {
-      background: var(--bg3);
-      border: 1px solid var(--border);
-      border-radius: 7px;
-      padding: 8px 12px;
-      font-size: 13px;
-      font-family: 'JetBrains Mono', monospace;
-      color: var(--text);
-      outline: none;
-      transition: border-color 0.2s;
-    }
-    .field input:focus, .field textarea:focus, .field select:focus { border-color: var(--accent); }
-    .field textarea { resize: vertical; min-height: 60px; }
-    .btn-create {
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      padding: 10px;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: opacity 0.2s;
-    }
+    /* rule detail */
+    .rule-detail { width: 100%; max-width: 900px; }
+    .rule-detail-header { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; }
+    .rule-detail-icon { font-size: 36px; }
+    .rule-detail-title { font-size: 20px; font-weight: 800; margin-bottom: 4px; }
+    .rule-detail-sub { font-size: 13px; color: var(--text2); }
+    .rule-detail-body { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .rule-what { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+    .rule-what h4 { font-size: 12px; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; }
+    .rule-what p { font-size: 13px; color: var(--text); line-height: 1.7; }
+    .rule-when { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+    .rule-when h4 { font-size: 12px; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; }
+    .rule-when ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    .rule-when li { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; line-height: 1.5; color: var(--text2); }
+    .rule-when li::before { content: '→'; color: var(--accent); font-weight: 700; flex-shrink: 0; }
+    .rule-when li strong { color: var(--text); }
+
+    /* rule demo form */
+    .rule-form { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 20px; grid-column: 1 / -1; }
+    .rule-form h4 { font-size: 12px; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+    .fld { display: flex; flex-direction: column; gap: 5px; }
+    .fld label { font-size: 10px; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: 0.06em; }
+    .fld input, .fld select { background: var(--bg3); border: 1px solid var(--border); border-radius: 6px; padding: 7px 11px; font-size: 12px; font-family: 'JetBrains Mono', monospace; color: var(--text); outline: none; }
+    .fld input:focus, .fld select:focus { border-color: var(--accent); }
+    .btn-create { background: var(--accent); color: #fff; border: none; border-radius: 7px; padding: 9px; width: 100%; font-size: 13px; font-weight: 600; cursor: pointer; transition: opacity 0.2s; }
     .btn-create:hover { opacity: 0.85; }
 
-    /* ── AI chat ── */
-    .ai-layout { width: 100%; max-width: 860px; }
-    .ai-conv {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-    .msg {
-      display: flex;
-      gap: 12px;
-      max-width: 85%;
-    }
+    /* page nav for rules */
+    .rule-page-nav { display: flex; gap: 8px; margin-bottom: 20px; }
+    .rule-page-btn { padding: 5px 14px; border-radius: 999px; font-size: 12px; font-weight: 600; border: 1px solid var(--border); background: var(--bg2); color: var(--text2); cursor: pointer; transition: all 0.2s; }
+    .rule-page-btn.active { background: rgba(88,166,255,0.15); border-color: rgba(88,166,255,0.4); color: var(--accent); }
+
+    /* AI chat */
+    .ai-conv { background: var(--bg2); border: 1px solid var(--border); border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 10px; margin-bottom: 18px; }
+    .msg { display: flex; gap: 10px; max-width: 82%; }
     .msg.user { align-self: flex-end; flex-direction: row-reverse; }
-    .msg-avatar {
-      width: 30px; height: 30px;
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 14px;
-      flex-shrink: 0;
-    }
+    .msg-avatar { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; }
     .msg.user .msg-avatar { background: var(--accent); }
     .msg.ai .msg-avatar { background: var(--green); }
-    .msg-bubble {
-      background: var(--bg3);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 10px 14px;
-      font-size: 13px;
-      line-height: 1.6;
-    }
-    .msg.user .msg-bubble { background: rgba(88,166,255,0.12); border-color: rgba(88,166,255,0.3); }
-    .ai-result {
-      background: rgba(63,185,80,0.08);
-      border: 1px solid rgba(63,185,80,0.25);
-      border-radius: 8px;
-      padding: 10px 14px;
-      font-size: 12px;
-      font-family: 'JetBrains Mono', monospace;
-      color: var(--green);
-      margin-top: 4px;
-    }
-    .mcp-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-    }
-    .mcp-chip {
-      background: var(--bg3);
-      border: 1px solid var(--border);
-      border-radius: 7px;
-      padding: 8px 12px;
-      font-size: 12px;
-      font-family: 'JetBrains Mono', monospace;
-      text-align: center;
-      color: var(--text2);
-    }
+    .msg-bubble { background: var(--bg3); border: 1px solid var(--border); border-radius: 9px; padding: 9px 13px; font-size: 12px; line-height: 1.6; }
+    .msg.user .msg-bubble { background: rgba(88,166,255,0.1); border-color: rgba(88,166,255,0.3); }
+    .ai-result { background: rgba(63,185,80,0.08); border: 1px solid rgba(63,185,80,0.2); border-radius: 6px; padding: 8px 12px; font-size: 11px; font-family: 'JetBrains Mono', monospace; color: var(--green); margin-top: 6px; line-height: 1.6; }
+    .mcp-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 7px; }
+    .mcp-chip { background: var(--bg3); border: 1px solid var(--border); border-radius: 6px; padding: 7px 10px; font-size: 11px; font-family: 'JetBrains Mono', monospace; text-align: center; color: var(--text2); }
     .mcp-chip.r { border-color: rgba(63,185,80,0.4); color: var(--green); }
 
-    /* ── mcp connect ── */
-    .connect-layout {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 28px;
-      width: 100%;
-      max-width: 860px;
-    }
-    .connect-box {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 20px;
-    }
-    .connect-box h4 {
-      font-size: 14px;
-      font-weight: 700;
-      margin-bottom: 14px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .connect-steps { display: flex; flex-direction: column; gap: 8px; }
-    .cs {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      font-size: 13px;
-      line-height: 1.5;
-    }
-    .cs-n {
-      width: 20px; height: 20px;
-      border-radius: 50%;
-      background: rgba(88,166,255,0.15);
-      color: var(--accent);
-      font-size: 11px;
-      font-weight: 700;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-    .cs span { color: var(--text2); }
-    .code-mini {
-      background: var(--bg3);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 10px 14px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
-      color: var(--orange);
-      margin-top: 8px;
-    }
+    /* MCP connect */
+    .connect-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; width: 100%; max-width: 860px; }
+    .connect-box { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+    .connect-box h4 { font-size: 14px; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+    .cs { display: flex; align-items: flex-start; gap: 10px; font-size: 12px; line-height: 1.5; margin-bottom: 8px; }
+    .cs-n { width: 19px; height: 19px; border-radius: 50%; background: rgba(88,166,255,0.15); color: var(--accent); font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+    .code-mini { background: var(--bg3); border: 1px solid var(--border); border-radius: 6px; padding: 9px 13px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--orange); margin-top: 10px; word-break: break-all; }
 
-    /* ── scenarios ── */
-    .scenario-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
-      width: 100%;
-      max-width: 900px;
-    }
-    .scenario-card {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 20px;
-      transition: border-color 0.2s;
-    }
+    /* scenarios */
+    .scenario-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; width: 100%; max-width: 880px; }
+    .scenario-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 18px; transition: border-color 0.2s; }
     .scenario-card:hover { border-color: var(--accent); }
-    .scenario-icon { font-size: 24px; margin-bottom: 10px; }
-    .scenario-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
-    .scenario-card p { font-size: 13px; color: var(--text2); line-height: 1.5; margin-bottom: 12px; }
-    .scenario-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      background: var(--bg3);
-      border-radius: 5px;
-      padding: 3px 8px;
-      font-size: 11px;
-      color: var(--text2);
-    }
+    .scenario-icon { font-size: 22px; margin-bottom: 8px; }
+    .scenario-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 5px; }
+    .scenario-card p { font-size: 12px; color: var(--text2); line-height: 1.6; margin-bottom: 10px; }
+    .scenario-tag { display: inline-flex; align-items: center; gap: 4px; background: var(--bg3); border-radius: 5px; padding: 3px 8px; font-size: 11px; color: var(--text2); }
 
-    /* ── cta ── */
-    .cta-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      width: 100%;
-      max-width: 720px;
-      margin-bottom: 32px;
-    }
-    .cta-card {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 24px;
-      text-align: center;
-      transition: border-color 0.2s;
-    }
+    /* cta */
+    .cta-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; width: 100%; max-width: 700px; margin-bottom: 28px; }
+    .cta-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 22px; text-align: center; transition: border-color 0.2s; }
     .cta-card:hover { border-color: var(--accent); }
-    .cta-icon { font-size: 28px; margin-bottom: 10px; }
-    .cta-card h4 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
-    .cta-card p { font-size: 12px; color: var(--text2); line-height: 1.5; }
-    .cta-url {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 13px;
-      font-family: 'JetBrains Mono', monospace;
-      color: var(--accent);
-    }
+    .cta-icon { font-size: 26px; margin-bottom: 8px; }
+    .cta-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+    .cta-card p { font-size: 11px; color: var(--text2); margin-bottom: 8px; }
+    .cta-url { font-size: 11px; font-family: 'JetBrains Mono', monospace; color: var(--accent); word-break: break-all; }
+    .cta-note { font-size: 12px; color: var(--text2); text-align: center; max-width: 440px; line-height: 1.7; }
   </style>
 </head>
 <body>
@@ -610,11 +201,11 @@
 
   <!-- Slide 1: Hero -->
   <div class="slide active" id="slide-0">
-    <div class="step-badge">使用教程</div>
+    <div class="label" style="margin-bottom:20px">使用教程</div>
     <h1 class="hero-title">RelayCraft<br/><span class="hi">快速上手</span></h1>
     <p class="hero-sub">
-      一款本地网络调试工具，支持流量捕获、规则重写、AI 辅助、<br/>
-      以及连接 Cursor / Claude 等 AI 编程工具。
+      本地网络调试工具，捕获流量、规则重写、AI 辅助、<br/>
+      支持连接 Cursor / Claude 等 AI 编程工具。
     </p>
     <div class="hero-stack">
       <span class="tech-tag">HTTP / HTTPS</span>
@@ -626,104 +217,44 @@
     </div>
   </div>
 
-  <!-- Slide 2: 快速上手流程 -->
+  <!-- Slide 2: 快速上手 -->
   <div class="slide" id="slide-1">
     <div class="label">Step 1</div>
     <h2>快速上手</h2>
-    <p class="sub">安装 → 启动代理 → 安装证书 → 开始抓包</p>
+    <p class="sub">安装 → 启动代理 → 安装证书 → 配置浏览器 → 开始抓包</p>
     <div class="flow-steps">
-      <div class="flow-step">
-        <div class="step-num">1</div>
-        <div class="step-text">
-          <strong>下载安装</strong>
-          <span>→ GitHub Releases 下载对应平台版本，macOS / Windows / Linux</span>
-        </div>
-      </div>
-      <div class="flow-step">
-        <div class="step-num">2</div>
-        <div class="step-text">
-          <strong>启动应用</strong>
-          <span>→ 首次运行会在本机默认端口（127.0.0.1:8080）启动 HTTP 代理</span>
-        </div>
-      </div>
-      <div class="flow-step">
-        <div class="step-num">3</div>
-        <div class="step-text">
-          <strong>安装 CA 证书</strong>
-          <span>→ 按指引导出并信任证书，才能抓 HTTPS流量（只需一次）</span>
-        </div>
-      </div>
-      <div class="flow-step">
-        <div class="step-num">4</div>
-        <div class="step-text">
-          <strong>配置系统代理</strong>
-          <span>→ 浏览器 / 系统代理指向 127.0.0.1:8080，或使用浏览器插件</span>
-        </div>
-      </div>
-      <div class="flow-step">
-        <div class="step-num">5</div>
-        <div class="step-text">
-          <strong>开始抓包</strong>
-          <span>→ Traffic 面板实时显示所有请求，点击查看详情</span>
-        </div>
-      </div>
+      <div class="flow-step"><div class="step-num">1</div><div class="step-text"><strong>下载安装</strong><span> → GitHub Releases 下载对应平台版本</span></div></div>
+      <div class="flow-step"><div class="step-num">2</div><div class="step-text"><strong>启动应用</strong><span> → 自动在本机端口（127.0.0.1:8080）启动 HTTP 代理</span></div></div>
+      <div class="flow-step"><div class="step-num">3</div><div class="step-text"><strong>安装 CA 证书</strong><span> → 按向导导出并信任证书（仅首次需要），解密 HTTPS 流量</span></div></div>
+      <div class="flow-step"><div class="step-num">4</div><div class="step-text"><strong>配置系统代理</strong><span> → 浏览器 / 系统代理指向 127.0.0.1:8080，或使用浏览器插件</span></div></div>
+      <div class="flow-step"><div class="step-num">5</div><div class="step-text"><strong>开始抓包</strong><span> → Traffic 面板实时显示所有请求，点击查看详情</span></div></div>
     </div>
   </div>
 
-  <!-- Slide 3: 流量监控界面 -->
+  <!-- Slide 3: 流量监控 -->
   <div class="slide" id="slide-2">
     <div class="label">Step 2</div>
     <h2>流量监控</h2>
-    <p class="sub">捕获请求 → 筛选 → 查看详情</p>
+    <p class="sub">实时捕获请求 / 响应，支持筛选、详情查看和一键导出</p>
     <div class="ui-mock">
       <div class="ui-bar">
         <div class="ui-dot" style="background:#f85149"></div>
         <div class="ui-dot" style="background:#d29922"></div>
         <div class="ui-dot" style="background:#3fb950"></div>
-        <div style="margin-left:8px;font-size:12px;color:var(--text2);font-family:'JetBrains Mono',monospace">Traffic · Session #3</div>
+        <div style="margin-left:8px;font-size:11px;color:var(--text2);font-family:'JetBrains Mono',monospace">Traffic · Session #3</div>
         <div style="margin-left:auto;display:flex;gap:8px">
-          <div style="background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:3px 10px;font-size:11px;color:var(--text2)">Filter: method=POST</div>
-          <div style="background:var(--green);border-radius:6px;padding:3px 10px;font-size:11px;color:#000;font-weight:600">Recording</div>
+          <div style="background:var(--bg2);border:1px solid var(--border);border-radius:5px;padding:3px 9px;font-size:11px;color:var(--text2)">Filter: method=POST</div>
+          <div style="background:var(--green);border-radius:5px;padding:3px 9px;font-size:11px;color:#000;font-weight:600">Recording</div>
         </div>
       </div>
       <div class="ui-body">
         <div class="req-list">
-          <div class="req-row">
-            <span class="m-tag m-get">GET</span>
-            <span class="url-text">cdn.example.com/static/logo.svg</span>
-            <span class="status-tag s-2">200</span>
-            <span class="type-text">img</span>
-          </div>
-          <div class="req-row sel">
-            <span class="m-tag m-post">POST</span>
-            <span class="url-text">api.example.com/v2/users/login</span>
-            <span class="status-tag s-2">200</span>
-            <span class="type-text">json</span>
-          </div>
-          <div class="req-row">
-            <span class="m-tag m-get">GET</span>
-            <span class="url-text">api.example.com/v2/products?page=1</span>
-            <span class="status-tag s-2">200</span>
-            <span class="type-text">json</span>
-          </div>
-          <div class="req-row">
-            <span class="m-tag m-post">POST</span>
-            <span class="url-text">api.example.com/v2/orders/create</span>
-            <span class="status-tag s-4">401</span>
-            <span class="type-text">json</span>
-          </div>
-          <div class="req-row">
-            <span class="m-tag m-put">PUT</span>
-            <span class="url-text">api.example.com/v2/users/profile</span>
-            <span class="status-tag s-2">200</span>
-            <span class="type-text">json</span>
-          </div>
-          <div class="req-row">
-            <span class="m-tag m-del">DEL</span>
-            <span class="url-text">api.example.com/v2/cart/items/88</span>
-            <span class="status-tag s-2">204</span>
-            <span class="type-text">–</span>
-          </div>
+          <div class="req-row"><span class="m-tag m-get">GET</span><span class="url-text">cdn.example.com/static/logo.svg</span><span class="s-2" style="font-size:11px;font-weight:600">200</span><span class="type-text">img</span></div>
+          <div class="req-row sel"><span class="m-tag m-post">POST</span><span class="url-text">api.example.com/v2/users/login</span><span class="s-2" style="font-size:11px;font-weight:600">200</span><span class="type-text">json</span></div>
+          <div class="req-row"><span class="m-tag m-get">GET</span><span class="url-text">api.example.com/v2/products?page=1</span><span class="s-2" style="font-size:11px;font-weight:600">200</span><span class="type-text">json</span></div>
+          <div class="req-row"><span class="m-tag m-post">POST</span><span class="url-text">api.example.com/v2/orders/create</span><span class="s-4" style="font-size:11px;font-weight:600">401</span><span class="type-text">json</span></div>
+          <div class="req-row"><span class="m-tag m-put">PUT</span><span class="url-text">api.example.com/v2/users/profile</span><span class="s-2" style="font-size:11px;font-weight:600">200</span><span class="type-text">json</span></div>
+          <div class="req-row"><span class="m-tag m-del">DEL</span><span class="url-text">api.example.com/v2/cart/items/88</span><span class="s-2" style="font-size:11px;font-weight:600">204</span><span class="type-text">–</span></div>
         </div>
         <div class="detail-panel">
           <div class="panel-box">
@@ -748,76 +279,103 @@
     </div>
   </div>
 
-  <!-- Slide 4: 规则引擎 -->
+  <!-- Slide 4: 六大规则概述 -->
   <div class="slide" id="slide-3">
     <div class="label">Step 3</div>
-    <h2>规则引擎</h2>
+    <h2>六大规则引擎</h2>
     <p class="sub">不需要配置文件，纯 UI 操作，点击即生效</p>
-    <div class="rules-layout">
-      <div class="rule-types">
-        <div class="rule-type">
-          <span class="rule-emoji">📁</span>
-          <div>
-            <div class="rule-name">Map Local</div>
-            <div class="rule-desc">返回本地文件内容</div>
-          </div>
+    <div class="rules-grid-2col">
+      <div class="rule-overview">
+        <div class="rule-overview-header">
+          <span class="rule-overview-icon">📁</span>
+          <span class="rule-overview-name">Map Local</span>
         </div>
-        <div class="rule-type sel">
-          <span class="rule-emoji">🌐</span>
-          <div>
-            <div class="rule-name">Map Remote</div>
-            <div class="rule-desc">转发到其他 URL</div>
-          </div>
+        <p class="rule-overview-desc">将匹配到的请求响应替换为本地文件内容，常用于返回本地 mock 数据</p>
+        <div class="rule-overview-example">api.example.com/v2/* → /Users/beta/mock/response.json</div>
+      </div>
+      <div class="rule-overview">
+        <div class="rule-overview-header">
+          <span class="rule-overview-icon">🌐</span>
+          <span class="rule-overview-name">Map Remote</span>
         </div>
-        <div class="rule-type">
-          <span class="rule-emoji">🏷️</span>
-          <div>
-            <div class="rule-name">Rewrite Header</div>
-            <div class="rule-desc">修改请求/响应头</div>
-          </div>
+        <p class="rule-overview-desc">将请求转发到另一个地址，常用于切换测试环境 / 前端独立调试</p>
+        <div class="rule-overview-example">api.example.com/v2/* → staging-api.example.com/v2/*</div>
+      </div>
+      <div class="rule-overview">
+        <div class="rule-overview-header">
+          <span class="rule-overview-icon">🏷️</span>
+          <span class="rule-overview-name">Rewrite Header</span>
         </div>
-        <div class="rule-type">
-          <span class="rule-emoji">✏️</span>
-          <div>
-            <div class="rule-name">Rewrite Body</div>
-            <div class="rule-desc">修改响应正文内容</div>
-          </div>
+        <p class="rule-overview-desc">修改请求或响应头，可添加、删除或替换 Header 的值</p>
+        <div class="rule-overview-example">添加 Authorization / 修改 Content-Type / 注入调试 Header</div>
+      </div>
+      <div class="rule-overview">
+        <div class="rule-overview-header">
+          <span class="rule-overview-icon">✏️</span>
+          <span class="rule-overview-name">Rewrite Body</span>
         </div>
-        <div class="rule-type">
-          <span class="rule-emoji">🐌</span>
-          <div>
-            <div class="rule-name">Throttling</div>
-            <div class="rule-desc">模拟弱网环境</div>
-          </div>
+        <p class="rule-overview-desc">修改请求或响应的正文内容，支持 JSON、正则、纯文本替换</p>
+        <div class="rule-overview-example">"plan": "free" → "plan": "pro"（测试高级功能）</div>
+      </div>
+      <div class="rule-overview">
+        <div class="rule-overview-header">
+          <span class="rule-overview-icon">🐌</span>
+          <span class="rule-overview-name">Throttling</span>
         </div>
-        <div class="rule-type">
-          <span class="rule-emoji">🚫</span>
-          <div>
-            <div class="rule-name">Block</div>
-            <div class="rule-desc">拦截指定请求</div>
-          </div>
+        <p class="rule-overview-desc">限制网络带宽，模拟 3G / 4G / 高延迟等弱网条件</p>
+        <div class="rule-overview-example">限速 500Kbps，延迟 200ms（模拟移动网络）</div>
+      </div>
+      <div class="rule-overview">
+        <div class="rule-overview-header">
+          <span class="rule-overview-icon">🚫</span>
+          <span class="rule-overview-name">Block Request</span>
+        </div>
+        <p class="rule-overview-desc">直接拦截并阻断匹配的请求，可模拟接口不可用、第三方服务挂掉</p>
+        <div class="rule-overview-example">block cdn.example.com/ads/*（屏蔽广告请求）</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 5: Map Local 详解 -->
+  <div class="slide" id="slide-4">
+    <div class="label">规则详解 · 1/6</div>
+    <div class="rule-detail">
+      <div class="rule-detail-header">
+        <span class="rule-detail-icon">📁</span>
+        <div>
+          <div class="rule-detail-title">Map Local</div>
+          <div class="rule-detail-sub">返回本地文件内容，不走真实网络</div>
         </div>
       </div>
-      <div class="rule-panel">
-        <div class="rule-panel-header">
-          <span>✏️</span> 新建规则 — Map Remote
+      <div class="rule-detail-body">
+        <div class="rule-what">
+          <h4>是什么</h4>
+          <p>指定一个 URL 匹配规则，当请求匹配时，RelayCraft 直接从本地文件读取响应内容返回，完全不发出真实网络请求。</p>
+        </div>
+        <div class="rule-when">
+          <h4>什么时候用</h4>
+          <ul>
+            <li><strong>后端接口还没写好</strong>，前端需要先跑起来调试 UI</li>
+            <li><strong>第三方付费 API</strong> 想本地 mock 避免每次调用扣钱</li>
+            <li><strong>想复现特定响应</strong>（如错误码、边界数据），保存成文件反复使用</li>
+            <li><strong>演示 / 截图</strong> 时不想依赖网络</li>
+          </ul>
         </div>
         <div class="rule-form">
-          <div class="field">
-            <div class="field-label">匹配条件（URL 或通配符）</div>
-            <input type="text" value="api.example.com/v2/*" />
+          <h4>⚙️ 创建规则</h4>
+          <div class="form-row">
+            <div class="fld">
+              <label>匹配 URL（支持通配符）</label>
+              <input type="text" value="api.example.com/v2/products/*" />
+            </div>
+            <div class="fld">
+              <label>本地文件路径</label>
+              <input type="text" value="/Users/beta/mock/products.json" />
+            </div>
           </div>
-          <div class="field">
-            <div class="field-label">目标地址</div>
-            <input type="text" value="https://staging.example.com/v2/*" />
-          </div>
-          <div class="field">
-            <div class="field-label">备注</div>
-            <input type="text" placeholder="可选，如：测试环境切换" />
-          </div>
-          <div style="display:flex;align-items:center;gap:10px">
-            <input type="checkbox" checked id="enableRule" style="accent-color:var(--accent)" />
-            <label for="enableRule" style="font-size:13px;color:var(--text2)">立即启用</label>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+            <input type="checkbox" checked id="ml-en" style="accent-color:var(--accent)" />
+            <label for="ml-en" style="font-size:12px;color:var(--text2)">立即启用</label>
           </div>
           <button class="btn-create">创建规则</button>
         </div>
@@ -825,12 +383,216 @@
     </div>
   </div>
 
-  <!-- Slide 5: AI 助手 -->
-  <div class="slide" id="slide-4">
+  <!-- Slide 6: Map Remote 详解 -->
+  <div class="slide" id="slide-5">
+    <div class="label">规则详解 · 2/6</div>
+    <div class="rule-detail">
+      <div class="rule-detail-header">
+        <span class="rule-detail-icon">🌐</span>
+        <div>
+          <div class="rule-detail-title">Map Remote</div>
+          <div class="rule-detail-sub">把请求转发到另一个 URL，不改前端代码</div>
+        </div>
+      </div>
+      <div class="rule-detail-body">
+        <div class="rule-what">
+          <h4>是什么</h4>
+          <p>指定匹配规则和目标地址，请求发出时被拦截并重定向到目标地址。真实发出去，但发到不同的地方。</p>
+        </div>
+        <div class="rule-when">
+          <h4>什么时候用</h4>
+          <ul>
+            <li><strong>前端联调</strong>：后端本地跑在 localhost:3000，一键把线上域名转发过去</li>
+            <li><strong>切测试环境</strong>：线上出问题，改一条规则切到 staging，不需要改代码 / 重启</li>
+            <li><strong>调用本地 AI</strong>：把请求转发到本地运行的模型服务（如 ollama）</li>
+            <li><strong>跨域调试</strong>：本地起一个中转服务，统一处理 CORS</li>
+          </ul>
+        </div>
+        <div class="rule-form">
+          <h4>⚙️ 创建规则</h4>
+          <div class="form-row">
+            <div class="fld">
+              <label>匹配 URL</label>
+              <input type="text" value="api.example.com/v2/*" />
+            </div>
+            <div class="fld">
+              <label>目标地址</label>
+              <input type="text" value="http://localhost:3000/v2/*" />
+            </div>
+          </div>
+          <button class="btn-create">创建规则</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 7: Rewrite Header 详解 -->
+  <div class="slide" id="slide-6">
+    <div class="label">规则详解 · 3/6</div>
+    <div class="rule-detail">
+      <div class="rule-detail-header">
+        <span class="rule-detail-icon">🏷️</span>
+        <div>
+          <div class="rule-detail-title">Rewrite Header</div>
+          <div class="rule-detail-sub">添加、删除或修改请求 / 响应头中的任意字段</div>
+        </div>
+      </div>
+      <div class="rule-detail-body">
+        <div class="rule-what">
+          <h4>是什么</h4>
+          <p>在请求发出去之前或响应到达浏览器之前，动态修改 HTTP Header。可以添加原本没有的 Header，或覆盖已有的值。</p>
+        </div>
+        <div class="rule-when">
+          <h4>什么时候用</h4>
+          <ul>
+            <li><strong>注入 Token</strong>：后端接口需要 Authorization，但前端漏带了，快速补上调试</li>
+            <li><strong>修改 UA</strong>：模拟不同浏览器或 App 的请求头</li>
+            <li><strong>绕过单点登录</strong>：在测试环境注入已有的登录 Cookie / Session</li>
+            <li><strong>调试缓存</strong>：修改 Cache-Control 或 Etag 强制刷新或命中缓存</li>
+            <li><strong>CORS 调试</strong>：添加或覆盖 Access-Control-* 系列 Header</li>
+          </ul>
+        </div>
+        <div class="rule-form">
+          <h4>⚙️ 创建规则</h4>
+          <div class="form-row">
+            <div class="fld">
+              <label>匹配 URL</label>
+              <input type="text" value="api.example.com/v2/*" />
+            </div>
+            <div class="fld">
+              <label>Header 名称</label>
+              <input type="text" value="Authorization" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="fld">
+              <label>操作</label>
+              <select><option>添加 / 覆盖</option><option>删除</option></select>
+            </div>
+            <div class="fld">
+              <label>Header 值</label>
+              <input type="text" value="Bearer eyJhbGciOiJIUzI1NiJ9..." />
+            </div>
+          </div>
+          <button class="btn-create">创建规则</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 8: Rewrite Body 详解 -->
+  <div class="slide" id="slide-7">
+    <div class="label">规则详解 · 4/6</div>
+    <div class="rule-detail">
+      <div class="rule-detail-header">
+        <span class="rule-detail-icon">✏️</span>
+        <div>
+          <div class="rule-detail-title">Rewrite Body</div>
+          <div class="rule-detail-sub">修改请求或响应的正文内容，支持 JSON / 正则 / 纯文本</div>
+        </div>
+      </div>
+      <div class="rule-detail-body">
+        <div class="rule-what">
+          <h4>是什么</h4>
+          <p>拦截并修改 HTTP Body 的内容。JSON 数据可以直接用路径定位字段替换，也可以用正则匹配任意文本。</p>
+        </div>
+        <div class="rule-when">
+          <h4>什么时候用</h4>
+          <ul>
+            <li><strong>测试付费功能</strong>：把 "plan": "free" 改成 "plan": "pro"，看前端 UI 变化</li>
+            <li><strong>复现错误响应</strong>：把 code 改成 500，看前端错误处理是否正确</li>
+            <li><strong>修改接口数据</strong>：长列表数据太多，改成只有 2 条，方便 UI 测试滚动和分页</li>
+            <li><strong>注入测试数据</strong>：给响应 JSON 加一个特殊的 error_code，前端有没有做判断</li>
+          </ul>
+        </div>
+        <div class="rule-form">
+          <h4>⚙️ 创建规则</h4>
+          <div class="form-row">
+            <div class="fld">
+              <label>匹配 URL</label>
+              <input type="text" value="api.example.com/v2/*" />
+            </div>
+            <div class="fld">
+              <label>匹配方式</label>
+              <select><option>JSON</option><option>正则</option><option>纯文本</option></select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="fld">
+              <label>查找内容</label>
+              <input type="text" value='"plan": "free"' />
+            </div>
+            <div class="fld">
+              <label>替换为</label>
+              <input type="text" value='"plan": "pro"' />
+            </div>
+          </div>
+          <button class="btn-create">创建规则</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 9: Throttling + Block -->
+  <div class="slide" id="slide-8">
+    <div class="label">规则详解 · 5-6/6</div>
+    <h2 style="margin-bottom:24px">Throttling · Block Request</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%;max-width:880px">
+      <div>
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+            <span style="font-size:28px">🐌</span>
+            <div>
+              <div style="font-size:16px;font-weight:800">Throttling</div>
+              <div style="font-size:12px;color:var(--text2)">模拟网络限速</div>
+            </div>
+          </div>
+          <div style="font-size:12px;color:var(--text2);line-height:1.7;margin-bottom:12px">
+            在真正发出请求前加入人为延迟和带宽限制，模拟真实网络环境。
+          </div>
+          <div style="background:var(--bg3);border-radius:6px;padding:8px 12px;font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--orange)">
+            带宽: 500 Kbps &nbsp;|&nbsp; 延迟: 200 ms
+          </div>
+        </div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.7">
+          <strong style="color:var(--text)">使用场景：</strong><br/>
+          → 验证 App 在弱网下加载状态是否友好<br/>
+          → 测试超时逻辑和重试机制是否正常<br/>
+          → 确认骨架屏和渐进式加载的实现效果
+        </div>
+      </div>
+      <div>
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+            <span style="font-size:28px">🚫</span>
+            <div>
+              <div style="font-size:16px;font-weight:800">Block Request</div>
+              <div style="font-size:12px;color:var(--text2)">直接拦截请求</div>
+            </div>
+          </div>
+          <div style="font-size:12px;color:var(--text2);line-height:1.7;margin-bottom:12px">
+            匹配到的请求直接被阻断，不发出网络请求，也不会有响应返回。
+          </div>
+          <div style="background:var(--bg3);border-radius:6px;padding:8px 12px;font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--orange)">
+            block cdn.example.com/ads/*
+          </div>
+        </div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.7">
+          <strong style="color:var(--text)">使用场景：</strong><br/>
+          → 屏蔽页面广告请求，加快加载速度<br/>
+          → 禁用特定 SDK / 监控脚本，方便本地调试<br/>
+          → 模拟第三方接口不可用，测试前端容错逻辑
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 10: AI 助手 -->
+  <div class="slide" id="slide-9">
     <div class="label">Step 4</div>
     <h2>AI 助手</h2>
     <p class="sub">Ctrl(⌘) + K 呼出，用自然语言创建规则、诊断请求</p>
-    <div class="ai-layout">
+    <div style="width:100%;max-width:860px">
       <div class="ai-conv">
         <div class="msg user">
           <div class="msg-avatar">🙋</div>
@@ -848,7 +610,7 @@
             </div>
           </div>
         </div>
-        <div class="msg user">
+        <div class="msg user" style="margin-top:4px">
           <div class="msg-avatar">🙋</div>
           <div class="msg-bubble">第 4 个请求返回 401 了，帮我诊断一下</div>
         </div>
@@ -859,13 +621,12 @@
             <div class="ai-result">
               问题: Authorization Header 缺失<br/>
               POST /api/v2/orders/create 需要 Bearer Token<br/>
-              当前请求未携带 Authorization 头<br/>
               建议: 添加 Authorization: Bearer {token}
             </div>
           </div>
         </div>
       </div>
-      <div style="font-size:13px;color:var(--text2);margin-bottom:12px;font-weight:600">MCP 服务器开放以下工具（连接 Cursor / Claude Desktop 使用）：</div>
+      <div style="font-size:13px;color:var(--text2);margin-bottom:12px;font-weight:600">MCP 服务器工具（连接 Cursor / Claude Desktop 使用）：</div>
       <div class="mcp-grid">
         <div class="mcp-chip r">list_flows</div>
         <div class="mcp-chip r">get_flow</div>
@@ -876,99 +637,93 @@
         <div class="mcp-chip">delete_rule</div>
         <div class="mcp-chip">toggle_rule</div>
         <div class="mcp-chip">replay_request</div>
+        <div class="mcp-chip">list_sessions</div>
       </div>
     </div>
   </div>
 
-  <!-- Slide 6: MCP 连接 -->
-  <div class="slide" id="slide-5">
+  <!-- Slide 11: MCP 连接 -->
+  <div class="slide" id="slide-10">
     <div class="label">Step 5</div>
     <h2>MCP 连接外部 AI</h2>
-    <p class="sub">把 RelayCraft 的流量数据暴露给 Cursor / Claude Desktop</p>
+    <p class="sub">把 RelayCraft 的流量数据暴露给 Cursor / Claude Desktop，AI 帮你分析</p>
     <div class="connect-layout">
       <div class="connect-box">
         <h4>🔗 Cursor</h4>
-        <div class="connect-steps">
-          <div class="cs"><div class="cs-n">1</div><div>打开 Cursor → Settings → <strong>Models &gt; MCP Servers</strong></div></div>
-          <div class="cs"><div class="cs-n">2</div><div>添加 MCP Server，填入 RelayCraft 提供的地址</div></div>
-          <div class="cs"><div class="cs-n">3</div><div>在 Cursor 对话框里直接问："帮我看看最近的 API 请求有没有问题"</div></div>
-        </div>
+        <div class="cs"><div class="cs-n">1</div><div>Cursor → Settings → <strong>Models → MCP Servers</strong></div></div>
+        <div class="cs"><div class="cs-n">2</div><div>添加 MCP Server，填入 RelayCraft 提供的地址</div></div>
+        <div class="cs"><div class="cs-n">3</div><div>在 Cursor 直接问："帮我看看最近的 API 请求有没有问题"</div></div>
         <div class="code-mini">http://localhost:7890/mcp</div>
       </div>
       <div class="connect-box">
         <h4>🤖 Claude Desktop</h4>
-        <div class="connect-steps">
-          <div class="cs"><div class="cs-n">1</div><div>编辑 <span>~/.cursor/mcp.json</span>（或 claude_desktop_config.json）</div></div>
-          <div class="cs"><div class="cs-n">2</div><div>添加 RelayCraft MCP Server 配置</div></div>
-          <div class="cs"><div class="cs-n">3</div><div>Claude 就能读取你的流量、创建规则、诊断请求了</div></div>
-        </div>
-        <div class="code-mini">"mcpServers": { "relaycraft": { "url": "http://localhost:7890/mcp" } }</div>
+        <div class="cs"><div class="cs-n">1</div><div>编辑 <span style="color:var(--text2)">~/.cursor/mcp.json</span>（或 claude_desktop_config.json）</div></div>
+        <div class="cs"><div class="cs-n">2</div><div>添加 RelayCraft MCP Server 配置</div></div>
+        <div class="cs"><div class="cs-n">3</div><div>Claude 就能读取流量、创建规则、诊断请求了</div></div>
+        <div class="code-mini">"relaycraft": { "url": "http://localhost:7890/mcp" }</div>
       </div>
     </div>
   </div>
 
-  <!-- Slide 7: 常见场景 -->
-  <div class="slide" id="slide-6">
+  <!-- Slide 12: 常见场景 -->
+  <div class="slide" id="slide-11">
     <div class="label">Step 6</div>
     <h2>常见使用场景</h2>
-    <p class="sub">这几个场景日常开发中最常用</p>
+    <p class="sub">这 4 个场景日常开发中最常用</p>
     <div class="scenario-grid">
       <div class="scenario-card">
         <div class="scenario-icon">🔄</div>
         <h4>前后端联调</h4>
-        <p>后端接口未就绪时，用 Map Remote 把请求转发到本地服务，或者 Map Local 返回 mock 数据，前端不受依赖</p>
-        <div class="scenario-tag">Map Remote / Map Local</div>
+        <p>后端接口未就绪时，用 Map Remote 把请求转发到 localhost，或者 Map Local 返回本地 mock 文件，前端独立跑起来不受依赖</p>
+        <div class="scenario-tag">Map Remote · Map Local</div>
       </div>
       <div class="scenario-card">
         <div class="scenario-icon">🐛</div>
         <h4>Bug 复现与诊断</h4>
-        <p>拦截请求/响应，实时修改 Header 或 Body 参数，复现边缘场景，AI 一键诊断 401/500 等错误根因</p>
-        <div class="scenario-tag">Breakpoints / AI 诊断</div>
+        <p>拦截请求/响应，实时修改参数复现场景；AI 一键诊断 401/500 等错误的根本原因，不用盲目猜测</p>
+        <div class="scenario-tag">Breakpoints · AI 诊断</div>
       </div>
       <div class="scenario-card">
         <div class="scenario-icon">🧪</div>
-        <h4>测试环境切换</h4>
-        <p>线上出问题，一键把 api.example.com 转发到 staging.example.com，不需要改代码，不需要重启服务</p>
+        <h4>测试环境秒级切换</h4>
+        <p>线上出问题，一键把 api.example.com 转发到 staging，不需要改代码、不需要重启服务，改完即生效</p>
         <div class="scenario-tag">Map Remote</div>
       </div>
       <div class="scenario-card">
         <div class="scenario-icon">🔒</div>
-        <h4>弱网测试</h4>
-        <p>开启 Throttling 规则，模拟 3G 或高延迟网络，验证前端在慢网下的表现是否符合预期</p>
-        <div class="scenario-tag">Throttling</div>
+        <h4>弱网与异常测试</h4>
+        <p>用 Throttling 模拟 3G/高延迟，验证慢网下加载状态；用 Block 模拟接口不可用，测试前端容错逻辑</p>
+        <div class="scenario-tag">Throttling · Block</div>
       </div>
     </div>
   </div>
 
-  <!-- Slide 8: 开始使用 -->
-  <div class="slide" id="slide-7">
+  <!-- Slide 13: 开始使用 -->
+  <div class="slide" id="slide-12">
     <div class="label">Done</div>
     <h2>开始使用</h2>
-    <p class="sub">免费下载，所有平台通用</p>
+    <p class="sub">免费下载，支持 macOS / Windows / Linux</p>
     <div class="cta-grid">
       <div class="cta-card">
         <div class="cta-icon">📥</div>
         <h4>下载</h4>
-        <p>macOS / Windows / Linux</p>
+        <p>所有平台</p>
         <div class="cta-url">github.com/relaycraft/relaycraft/releases</div>
       </div>
       <div class="cta-card">
         <div class="cta-icon">📖</div>
         <h4>文档</h4>
-        <p>完整使用指南</p>
+        <p>使用指南</p>
         <div class="cta-url">relaycraft.dev/docs</div>
       </div>
       <div class="cta-card">
         <div class="cta-icon">💬</div>
-        <h4>讨论</h4>
+        <h4>讨论区</h4>
         <p>提问题、提建议</p>
         <div class="cta-url">github.com/relaycraft/relaycraft/discussions</div>
       </div>
     </div>
-    <div style="font-size:13px;color:var(--text2);text-align:center;max-width:480px;line-height:1.7">
-      完全离线运行，零账号，数据不出本机。<br/>
-      开源，基于 GNU AGPL v3。
-    </div>
+    <div class="cta-note">完全离线运行 · 零账号 · 数据不出本机 · 开源（AGPL v3）</div>
   </div>
 
 </div>
@@ -1008,7 +763,6 @@
 
   prevBtn.addEventListener('click', () => go(current - 1));
   nextBtn.addEventListener('click', () => go(current + 1));
-
   document.addEventListener('keydown', e => {
     if (e.key === 'ArrowRight' || e.key === 'ArrowDown') go(current + 1);
     if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') go(current - 1);

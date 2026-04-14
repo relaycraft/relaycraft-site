@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RelayCraft 演示</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0f;
+      --bg2: #111118;
+      --surface: #1a1a24;
+      --border: #2a2a3a;
+      --text: #e8e8f0;
+      --text2: #8888a0;
+      --accent: #8b5cf6;
+      --accent2: #a78bfa;
+      --accent-glow: rgba(139, 92, 246, 0.25);
+      --green: #34d399;
+      --yellow: #fbbf24;
+      --red: #f87171;
+      --blue: #60a5fa;
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, sans-serif;
+      overflow: hidden;
+    }
+
+    .deck {
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 80px;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(40px);
+      transition: opacity 0.45s cubic-bezier(0.4,0,0.2,1),
+                  transform 0.45s cubic-bezier(0.4,0,0.2,1);
+    }
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(0);
+    }
+
+    /* nav dots */
+    .dots {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+      z-index: 100;
+    }
+    .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--border);
+      cursor: pointer;
+      transition: all 0.3s;
+      border: none;
+    }
+    .dot.active {
+      background: var(--accent);
+      box-shadow: 0 0 10px var(--accent-glow);
+      transform: scale(1.3);
+    }
+
+    /* arrows */
+    .arrow {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text2);
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+      z-index: 100;
+      transition: all 0.2s;
+    }
+    .arrow:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .arrow.prev { left: 24px; }
+    .arrow.next { right: 24px; }
+    .arrow:disabled { opacity: 0.15; cursor: default; }
+    .arrow:disabled:hover { background: var(--surface); color: var(--text2); border-color: var(--border); }
+
+    /* progress bar */
+    .progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transition: width 0.4s ease;
+      z-index: 100;
+    }
+
+    /* slide number */
+    .slide-num {
+      position: fixed;
+      bottom: 32px;
+      right: 40px;
+      font-size: 13px;
+      color: var(--text2);
+      font-family: 'JetBrains Mono', monospace;
+      z-index: 100;
+    }
+
+    /* ── Slide 1: Hero ── */
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(139,92,246,0.12);
+      border: 1px solid rgba(139,92,246,0.3);
+      color: var(--accent2);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 16px;
+      border-radius: 999px;
+      margin-bottom: 32px;
+      letter-spacing: 0.05em;
+    }
+    .hero-title {
+      font-size: clamp(48px, 6vw, 80px);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+    .hero-title .grad {
+      background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 50%, #6d28d9 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      font-size: clamp(16px, 2vw, 22px);
+      color: var(--text2);
+      text-align: center;
+      max-width: 620px;
+      line-height: 1.6;
+      margin-bottom: 48px;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      padding: 14px 32px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 15px;
+      text-decoration: none;
+      transition: all 0.2s;
+      border: none;
+      cursor: pointer;
+    }
+    .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); }
+    .btn-secondary {
+      background: transparent;
+      color: var(--text2);
+      padding: 14px 32px;
+      border-radius: 10px;
+      font-weight: 500;
+      font-size: 15px;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .btn-secondary:hover { border-color: var(--accent); color: var(--accent2); }
+
+    /* ── Slide 2: Pain Points ── */
+    .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .section-title {
+      font-size: clamp(28px, 3.5vw, 44px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+    .section-sub {
+      font-size: 17px;
+      color: var(--text2);
+      margin-bottom: 48px;
+    }
+    .pain-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      width: 100%;
+      max-width: 900px;
+    }
+    .pain-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      transition: border-color 0.3s;
+    }
+    .pain-card:hover { border-color: var(--red); }
+    .pain-icon {
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+    .pain-card h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .pain-card p {
+      font-size: 14px;
+      color: var(--text2);
+      line-height: 1.6;
+    }
+
+    /* ── Slide 3: Positioning ── */
+    .compare-table {
+      width: 100%;
+      max-width: 860px;
+      border-collapse: collapse;
+      margin-bottom: 40px;
+    }
+    .compare-table th {
+      text-align: left;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text2);
+      padding: 12px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .compare-table th.rc {
+      color: var(--accent2);
+      text-align: center;
+    }
+    .compare-table td {
+      padding: 14px 20px;
+      font-size: 14px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text2);
+    }
+    .compare-table td:first-child { color: var(--text); font-weight: 500; }
+    .compare-table tr:last-child td { border-bottom: none; }
+    .compare-table td.rc-cell {
+      text-align: center;
+    }
+    .check { color: var(--green); font-weight: 700; }
+    .cross { color: var(--red); font-weight: 700; }
+    .partial { color: var(--yellow); font-weight: 700; }
+
+    /* ── Slide 4: Traffic Monitor ── */
+    .feature-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      width: 100%;
+      max-width: 960px;
+      align-items: center;
+    }
+    .feature-visual {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+    }
+    .mock-header {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .mock-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .mock-dot.r { background: #f87171; }
+    .mock-dot.y { background: #fbbf24; }
+    .mock-dot.g { background: #34d399; }
+    .mock-bar {
+      height: 28px;
+      background: var(--bg2);
+      border-radius: 6px;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      font-size: 11px;
+      color: var(--text2);
+      gap: 8px;
+    }
+    .mock-bar .method { font-weight: 700; color: var(--green); }
+    .mock-bar .method.post { color: var(--blue); }
+    .mock-bar .status { margin-left: auto; color: var(--green); }
+    .mock-bar .status.err { color: var(--red); }
+    .feature-list { list-style: none; }
+    .feature-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 0;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+    .feature-list li::before {
+      content: '→';
+      color: var(--accent);
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .feature-list li strong { color: var(--text); }
+
+    /* ── Slide 5: Rules Engine ── */
+    .rules-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      width: 100%;
+      max-width: 900px;
+    }
+    .rule-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      transition: all 0.3s;
+    }
+    .rule-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .rule-icon { font-size: 24px; margin-bottom: 10px; }
+    .rule-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+    .rule-card p { font-size: 12px; color: var(--text2); line-height: 1.5; }
+
+    /* ── Slide 6: AI + MCP ── */
+    .ai-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      width: 100%;
+      max-width: 960px;
+    }
+    .ai-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+    }
+    .ai-box h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .ai-chat {
+      background: var(--bg2);
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 10px;
+      font-size: 13px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .ai-chat.user { border-left: 3px solid var(--accent); }
+    .ai-chat.ai { border-left: 3px solid var(--green); }
+    .ai-label { font-size: 11px; color: var(--text2); margin-bottom: 4px; font-family: 'Inter', sans-serif; }
+    .mcp-tools {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .mcp-tool {
+      background: var(--bg2);
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--accent2);
+      border: 1px solid var(--border);
+    }
+    .mcp-tool.read { border-color: rgba(52,211,153,0.3); color: var(--green); }
+
+    /* ── Slide 7: Tech Stack ── */
+    .stack-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px;
+      width: 100%;
+      max-width: 900px;
+      margin-bottom: 40px;
+    }
+    .stack-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      text-align: center;
+      transition: border-color 0.3s;
+    }
+    .stack-card:hover { border-color: var(--accent); }
+    .stack-icon { font-size: 32px; margin-bottom: 12px; }
+    .stack-card h4 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+    .stack-card p { font-size: 12px; color: var(--text2); }
+    .arch-flow {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .arch-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 20px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .arch-box.acc { border-color: var(--accent); color: var(--accent2); }
+    .arch-arrow { color: var(--text2); font-size: 18px; }
+
+    /* ── Slide 8: CTA ── */
+    .cta-title {
+      font-size: clamp(32px, 4vw, 56px);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .cta-links {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 48px;
+    }
+    .cta-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 24px;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.2s;
+    }
+    .cta-link:hover { border-color: var(--accent); color: var(--accent2); }
+    .cta-link .icon { font-size: 18px; }
+    .cta-note {
+      font-size: 14px;
+      color: var(--text2);
+      text-align: center;
+      max-width: 480px;
+      line-height: 1.7;
+    }
+
+    /* keyboard hint */
+    .kbd-hint {
+      position: fixed;
+      top: 24px;
+      right: 40px;
+      font-size: 12px;
+      color: var(--text2);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    kbd {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+    }
+
+    /* logo watermark */
+    .logo-wm {
+      position: fixed;
+      top: 24px;
+      left: 40px;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--accent2);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+  </style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<div class="logo-wm">🛰️ RelayCraft</div>
+<div class="kbd-hint"><kbd>←</kbd><kbd>→</kbd> 切换页面</div>
+
+<div class="deck" id="deck">
+
+  <!-- Slide 1: Hero -->
+  <div class="slide active" id="slide-0">
+    <div class="hero-badge">✨ AI-Native Web Traffic Debugging</div>
+    <h1 class="hero-title">网络调试，<br/><span class="grad">重新定义</span></h1>
+    <p class="hero-sub">
+      RelayCraft 是一款专为现代化开发设计的 AI 原生网络流量调试工具。<br/>
+      完全本地运行，零账号，隐私优先。
+    </p>
+    <div class="hero-actions">
+      <a class="btn-primary" href="https://github.com/relaycraft/relaycraft/releases" target="_blank">免费下载</a>
+      <a class="btn-secondary" href="https://relaycraft.dev" target="_blank">访问官网</a>
+    </div>
+  </div>
+
+  <!-- Slide 2: Pain Points -->
+  <div class="slide" id="slide-1">
+    <div class="section-label">背景</div>
+    <h2 class="section-title">传统工具的问题</h2>
+    <p class="section-sub">Charles · Whistle · mitmproxy — 长期痛点一览</p>
+    <div class="pain-grid">
+      <div class="pain-card">
+        <div class="pain-icon">📋</div>
+        <h3>配置复杂</h3>
+        <p>Whistle 规则语法门槛高，Charles 界面老旧，新人上手成本大。</p>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">🤖</div>
+        <h3>AI 能力缺失</h3>
+        <p>无法用自然语言创建规则、诊断请求，所有操作都需要手工完成。</p>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">🔌</div>
+        <h3>插件生态封闭</h3>
+        <p>扩展能力有限，无法与 Cursor、Claude 等 AI 工具联动调试。</p>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">🔒</div>
+        <h3>隐私风险</h3>
+        <p>部分工具需要注册账号或联网使用，数据经过第三方服务器。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 3: Positioning -->
+  <div class="slide" id="slide-2">
+    <div class="section-label">定位</div>
+    <h2 class="section-title">RelayCraft 的差异化</h2>
+    <p class="section-sub">对比主流调试工具</p>
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>功能</th>
+          <th class="rc">RelayCraft</th>
+          <th>Charles</th>
+          <th>Whistle</th>
+          <th>mitmproxy</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>AI 原生能力</td>
+          <td class="rc-cell"><span class="check">✓</span></td>
+          <td class="rc-cell"><span class="cross">✗</span></td>
+          <td class="rc-cell"><span class="cross">✗</span></td>
+          <td class="rc-cell"><span class="cross">✗</span></td>
+        </tr>
+        <tr>
+          <td>MCP 服务器</td>
+          <td class="rc-cell"><span class="check">✓</span></td>
+          <td class="rc-cell"><span class="cross">✗</span></td>
+          <td class="rc-cell"><span class="cross">✗</span></td>
+          <td class="rc-cell"><span class="cross">✗</span></td>
+        </tr>
+        <tr>
+          <td>零账号 / 离线运行</td>
+          <td class="rc-cell"><span class="check">✓</span></td>
+          <td class="rc-cell"><span class="partial">~</span></td>
+          <td class="rc-cell"><span class="check">✓</span></td>
+          <td class="rc-cell"><span class="check">✓</span></td>
+        </tr>
+        <tr>
+          <td>Python 脚本生态</td>
+          <td class="rc-cell"><span class="check">✓</span></td>
+          <td class="rc-cell"><span class="cross">✗</span></td>
+          <td class="rc-cell"><span class="partial">JS</span></td>
+          <td class="rc-cell"><span class="check">✓</span></td>
+        </tr>
+        <tr>
+          <td>现代 UI / 主题</td>
+          <td class="rc-cell"><span class="check">✓</span></td>
+          <td class="rc-cell"><span class="partial">旧</span></td>
+          <td class="rc-cell"><span class="partial">旧</span></td>
+          <td class="rc-cell"><span class="partial">TUI</span></td>
+        </tr>
+        <tr>
+          <td>插件系统</td>
+          <td class="rc-cell"><span class="check">✓</span></td>
+          <td class="rc-cell"><span class="partial">付费</span></td>
+          <td class="rc-cell"><span class="check">✓</span></td>
+          <td class="rc-cell"><span class="partial">脚本</span></td>
+        </tr>
+        <tr>
+          <td>开源</td>
+          <td class="rc-cell"><span class="check">✓ AGPL</span></td>
+          <td class="rc-cell"><span class="cross">闭源</span></td>
+          <td class="rc-cell"><span class="check">MIT</span></td>
+          <td class="rc-cell"><span class="check">MIT</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Slide 4: Traffic Monitor -->
+  <div class="slide" id="slide-3">
+    <div class="section-label">核心能力</div>
+    <h2 class="section-title">流量监控</h2>
+    <p class="section-sub">实时捕获、分析、筛选、导出 HTTP / HTTPS / WebSocket 流量</p>
+    <div class="feature-split">
+      <div class="feature-visual">
+        <div class="mock-header">
+          <div class="mock-dot r"></div><div class="mock-dot y"></div><div class="mock-dot g"></div>
+        </div>
+        <div class="mock-bar"><span class="method post">POST</span> api.example.com/v2/users <span class="status">200 OK</span></div>
+        <div class="mock-bar"><span class="method">GET</span> cdn.example.com/assets/logo.png <span class="status">200 OK</span></div>
+        <div class="mock-bar"><span class="method">GET</span> api.example.com/v2/products?page=3 <span class="status">200 OK</span></div>
+        <div class="mock-bar"><span class="method">POST</span> api.example.com/v1/auth/login <span class="status err">401 Unauthorized</span></div>
+        <div class="mock-bar"><span class="method">WS</span> ws.example.com/live/stream <span class="status">101</span></div>
+      </div>
+      <ul class="feature-list">
+        <li><strong>多协议支持</strong> — HTTP、HTTPS、WebSocket 流量一览无遗</li>
+        <li><strong>深度分析</strong> — JSON 语法高亮、图片预览、时序 Waterfall</li>
+        <li><strong>智能筛选</strong> — 按方法、域名、状态码、内容类型过滤</li>
+        <li><strong>一键导出</strong> — cURL、HAR、Relay Session (.relay)</li>
+        <li><strong>断点调试</strong> — 实时暂停、修改、恢复请求 / 响应</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Slide 5: Rules Engine -->
+  <div class="slide" id="slide-4">
+    <div class="section-label">规则引擎</div>
+    <h2 class="section-title">6 种规则类型</h2>
+    <p class="section-sub">可视化规则构建器，无需配置文件，纯 UI 操作</p>
+    <div class="rules-grid">
+      <div class="rule-card">
+        <div class="rule-icon">📁</div>
+        <h4>Map Local</h4>
+        <p>将响应映射到本地文件，支持 JSON、图片、任意内容</p>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon">🌐</div>
+        <h4>Map Remote</h4>
+        <p>将请求转发到不同 URL，一键切换测试环境 / 生产环境</p>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon">🏷️</div>
+        <h4>Rewrite Header</h4>
+        <p>动态修改请求或响应的 Header，添加 Token、修改 UA</p>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon">✏️</div>
+        <h4>Rewrite Body</h4>
+        <p>修改 Body 内容，支持 JSON Path、正则、纯文本替换</p>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon">🐌</div>
+        <h4>Throttling</h4>
+        <p>模拟弱网环境，3G、Edge、自定义限速，测试用户体验</p>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon">🚫</div>
+        <h4>Block Request</h4>
+        <p>即时拦截匹配请求，屏蔽广告、禁用特定 API 调用</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 6: AI + MCP -->
+  <div class="slide" id="slide-5">
+    <div class="section-label">AI 能力</div>
+    <h2 class="section-title">自然语言驱动一切</h2>
+    <p class="section-sub">Ctrl(⌘) + K 全局命令中心，MCP 服务器开放所有能力给外部 AI</p>
+    <div class="ai-layout">
+      <div class="ai-box">
+        <h3>🤖 AI 助手对话示例</h3>
+        <div class="ai-chat user">
+          <div class="ai-label">你</div>
+          把所有 /api/v2/* 的响应里的 "version": "2.0" 改成 "version": "3.0"
+        </div>
+        <div class="ai-chat ai">
+          <div class="ai-label">RelayCraft</div>
+          已创建 Rewrite Body 规则：<br/>
+          匹配 /api/v2/*，执行 JSON 重写<br/>
+          "version": "2.0" → "version": "3.0"<br/>
+          ✅ 已启用
+        </div>
+        <div class="ai-chat user" style="margin-top:8px">
+          <div class="ai-label">你</div>
+          诊断第 4 个请求为什么返回 401
+        </div>
+        <div class="ai-chat ai">
+          <div class="ai-label">RelayCraft</div>
+          检测到：Authorization Header 缺失<br/>
+          当前请求未携带 Bearer Token<br/>
+          建议：添加 header Authorization: Bearer {token}
+        </div>
+      </div>
+      <div class="ai-box">
+        <h3>🔌 MCP 服务器工具</h3>
+        <p style="font-size:13px;color:var(--text2);margin-bottom:12px">设置 → 功能集成中开启 Bearer Token，连接 Claude Desktop / Cursor</p>
+        <div class="mcp-tools">
+          <div class="mcp-tool read">list_flows</div>
+          <div class="mcp-tool read">get_flow</div>
+          <div class="mcp-tool read">search_flows</div>
+          <div class="mcp-tool read">get_session_stats</div>
+          <div class="mcp-tool read">list_rules</div>
+          <div class="mcp-tool">create_rule</div>
+          <div class="mcp-tool">delete_rule</div>
+          <div class="mcp-tool">toggle_rule</div>
+          <div class="mcp-tool">replay_request</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 7: Tech Stack -->
+  <div class="slide" id="slide-6">
+    <div class="section-label">技术内幕</div>
+    <h2 class="section-title">现代化技术栈</h2>
+    <p class="section-sub">Tauri + React + Rust + Python = 轻量、快速、强大</p>
+    <div class="stack-grid">
+      <div class="stack-card">
+        <div class="stack-icon">🪟</div>
+        <h4>Tauri v2</h4>
+        <p>Rust 后端 + Web 前端<br/>二进制体积小<br/>原生系统集成</p>
+      </div>
+      <div class="stack-card">
+        <div class="stack-icon">⚛️</div>
+        <h4>React + TS</h4>
+        <p>TypeScript 类型安全<br/>响应式 UI<br/>Zustand 状态管理</p>
+      </div>
+      <div class="stack-card">
+        <div class="stack-icon">🦀</div>
+        <h4>Rust</h4>
+        <p>高性能核心逻辑<br/>内存安全<br/>并发处理</p>
+      </div>
+      <div class="stack-card">
+        <div class="stack-icon">🐍</div>
+        <h4>mitmproxy</h4>
+        <p>Python 引擎<br/>成熟代理能力<br/>可编程脚本</p>
+      </div>
+    </div>
+    <div class="arch-flow">
+      <div class="arch-box">🎨 UI (React)</div>
+      <span class="arch-arrow">→</span>
+      <div class="arch-box">⚙️ Core (Rust)</div>
+      <span class="arch-arrow">→</span>
+      <div class="arch-box acc">🐍 Proxy Engine (Python)</div>
+      <span class="arch-arrow">→</span>
+      <div class="arch-box">🌐 网络流量</div>
+    </div>
+  </div>
+
+  <!-- Slide 8: CTA -->
+  <div class="slide" id="slide-7">
+    <div class="section-label">开始使用</div>
+    <h2 class="cta-title">现在就试试 RelayCraft</h2>
+    <div class="cta-links">
+      <a class="cta-link" href="https://github.com/relaycraft/relaycraft/releases" target="_blank">
+        <span class="icon">📥</span> 下载最新版
+      </a>
+      <a class="cta-link" href="https://github.com/relaycraft/relaycraft" target="_blank">
+        <span class="icon">⭐</span> GitHub Star
+      </a>
+      <a class="cta-link" href="https://github.com/relaycraft/relaycraft/discussions" target="_blank">
+        <span class="icon">💬</span> 讨论区
+      </a>
+      <a class="cta-link" href="https://relaycraft.dev" target="_blank">
+        <span class="icon">🌐</span> 官网
+      </a>
+    </div>
+    <p class="cta-note">
+      完全免费、开源、离线可用。<br/>
+      支持 macOS、Windows、Linux。<br/>
+      遇到问题或想要新功能，欢迎提 Issue！
+    </p>
+  </div>
+
+</div>
+
+<div class="dots" id="dots"></div>
+<button class="arrow prev" id="prevBtn" disabled>‹</button>
+<button class="arrow next" id="nextBtn">›</button>
+<div class="slide-num" id="slideNum"></div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const dots = document.getElementById('dots');
+  const progress = document.getElementById('progress');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const slideNum = document.getElementById('slideNum');
+  let current = 0;
+
+  // Build dots
+  slides.forEach((_, i) => {
+    const d = document.createElement('button');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.addEventListener('click', () => go(i));
+    dots.appendChild(d);
+  });
+
+  function go(n) {
+    slides[current].classList.remove('active');
+    dots.children[current].classList.remove('active');
+    current = Math.max(0, Math.min(n, slides.length - 1));
+    slides[current].classList.add('active');
+    dots.children[current].classList.add('active');
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === slides.length - 1;
+    slideNum.textContent = (current + 1) + ' / ' + slides.length;
+    progress.style.width = ((current + 1) / slides.length * 100) + '%';
+  }
+
+  prevBtn.addEventListener('click', () => go(current - 1));
+  nextBtn.addEventListener('click', () => go(current + 1));
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') go(current + 1);
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') go(current - 1);
+    if (e.key === 'Home') go(0);
+    if (e.key === 'End') go(slides.length - 1);
+  });
+
+  // Touch/swipe support
+  let touchStartX = 0;
+  document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
+  document.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(dx) > 50) dx < 0 ? go(current + 1) : go(current - 1);
+  });
+
+  go(0);
+</script>
+</body>
+</html>

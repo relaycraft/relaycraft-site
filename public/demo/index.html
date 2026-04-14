@@ -190,11 +190,35 @@
     .cta-card p { font-size: 11px; color: var(--text2); margin-bottom: 8px; }
     .cta-url { font-size: 11px; font-family: 'JetBrains Mono', monospace; color: var(--accent); word-break: break-all; }
     .cta-note { font-size: 12px; color: var(--text2); text-align: center; max-width: 440px; line-height: 1.7; }
+
+    .print-btn { position: fixed; top: 18px; right: 140px; background: var(--bg3); border: 1px solid var(--border); color: var(--text2); padding: 5px 12px; border-radius: 6px; font-size: 11px; cursor: pointer; z-index: 100; transition: all 0.2s; font-family: inherit; display: flex; align-items: center; gap: 5px; }
+    .print-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+    @media print {
+      .dots, .arrow, .progress, .slide-num, .logo, .print-btn, .kbd-hint { display: none !important; }
+      .slide { position: static !important; opacity: 1 !important; transform: none !important; pointer-events: auto !important; page-break-after: always; height: auto; min-height: 100vh; padding: 40px; }
+      body { overflow: visible; background: white; color: black; }
+      .slide { background: white; }
+    }
+
+    .download-links { width: 100%; max-width: 720px; margin-bottom: 28px; }
+    .dl-title { font-size: 13px; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 14px; text-align: center; }
+    .dl-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .dl-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 18px; text-align: center; text-decoration: none; transition: all 0.2s; display: block; }
+    .dl-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .dl-icon { font-size: 24px; margin-bottom: 8px; }
+    .dl-name { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; font-family: 'JetBrains Mono', monospace; }
+    .dl-desc { font-size: 11px; color: var(--text2); line-height: 1.4; }
+    @media print {
+      .dl-card { border: 1px solid #ccc; background: white; }
+      .dl-name, .dl-desc { color: black; }
+    }
   </style>
 </head>
 <body>
 <div class="progress" id="progress"></div>
 <div class="logo">🛰️ RelayCraft</div>
+    <button class="print-btn" id="printBtn" title="导出 PDF（浏览器打印）">🖨️ 导出 PDF</button>
 <div class="kbd-hint"><kbd>←</kbd><kbd>→</kbd> 翻页</div>
 
 <div class="deck" id="deck">
@@ -723,6 +747,26 @@
         <div class="cta-url">github.com/relaycraft/relaycraft/discussions</div>
       </div>
     </div>
+    <div class="download-links">
+      <div class="dl-title">示例脚本下载</div>
+      <div class="dl-grid">
+        <a class="dl-card" href="https://mcp-static.vercel.app/mcp-server-demo.js" target="_blank">
+          <div class="dl-icon">🛰️</div>
+          <div class="dl-name">mcp-server-demo.js</div>
+          <div class="dl-desc">MCP 服务器 · 端口 7090 · 10 个工具</div>
+        </a>
+        <a class="dl-card" href="https://mcp-static.vercel.app/advanced-demo.js" target="_blank">
+          <div class="dl-icon">🤖</div>
+          <div class="dl-name">advanced-demo.js</div>
+          <div class="dl-desc">高级能力演示 · 9 步完整闭环</div>
+        </a>
+        <a class="dl-card" href="https://mcp-static.vercel.app/websocket-demo.js" target="_blank">
+          <div class="dl-icon">🔌</div>
+          <div class="dl-name">websocket-demo.js</div>
+          <div class="dl-desc">WebSocket 演示 · Echo 服务器</div>
+        </a>
+      </div>
+    </div>
     <div class="cta-note">完全离线运行 · 零账号 · 数据不出本机 · 开源（AGPL v3）</div>
   </div>
 
@@ -776,6 +820,9 @@
   }, { passive: true });
 
   go(0);
+
+  document.getElementById('printBtn').addEventListener('click', () => { window.print(); });
+
 </script>
 </body>
 </html>

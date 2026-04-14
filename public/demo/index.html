@@ -248,9 +248,9 @@
     <p class="sub">安装 → 启动代理 → 安装证书 → 配置浏览器 → 开始抓包</p>
     <div class="flow-steps">
       <div class="flow-step"><div class="step-num">1</div><div class="step-text"><strong>下载安装</strong><span> → GitHub Releases 下载对应平台版本</span></div></div>
-      <div class="flow-step"><div class="step-num">2</div><div class="step-text"><strong>启动应用</strong><span> → 自动在本机端口（127.0.0.1:8080）启动 HTTP 代理</span></div></div>
+      <div class="flow-step"><div class="step-num">2</div><div class="step-text"><strong>启动应用</strong><span> → 自动在本机端口（127.0.0.1:9090）启动 HTTP 代理</span></div></div>
       <div class="flow-step"><div class="step-num">3</div><div class="step-text"><strong>安装 CA 证书</strong><span> → 按向导导出并信任证书（仅首次需要），解密 HTTPS 流量</span></div></div>
-      <div class="flow-step"><div class="step-num">4</div><div class="step-text"><strong>配置系统代理</strong><span> → 浏览器 / 系统代理指向 127.0.0.1:8080，或使用浏览器插件</span></div></div>
+      <div class="flow-step"><div class="step-num">4</div><div class="step-text"><strong>配置系统代理</strong><span> → 浏览器 / 系统代理指向 127.0.0.1:9090，或使用浏览器插件</span></div></div>
       <div class="flow-step"><div class="step-num">5</div><div class="step-text"><strong>开始抓包</strong><span> → Traffic 面板实时显示所有请求，点击查看详情</span></div></div>
     </div>
   </div>
@@ -677,14 +677,14 @@
         <div class="cs"><div class="cs-n">1</div><div>Cursor → Settings → <strong>Models → MCP Servers</strong></div></div>
         <div class="cs"><div class="cs-n">2</div><div>添加 MCP Server，填入 RelayCraft 提供的地址</div></div>
         <div class="cs"><div class="cs-n">3</div><div>在 Cursor 直接问："帮我看看最近的 API 请求有没有问题"</div></div>
-        <div class="code-mini">http://localhost:7890/mcp</div>
+        <div class="code-mini">http://localhost:7090/mcp</div>
       </div>
       <div class="connect-box">
         <h4>🤖 Claude Desktop</h4>
         <div class="cs"><div class="cs-n">1</div><div>编辑 <span style="color:var(--text2)">~/.cursor/mcp.json</span>（或 claude_desktop_config.json）</div></div>
         <div class="cs"><div class="cs-n">2</div><div>添加 RelayCraft MCP Server 配置</div></div>
         <div class="cs"><div class="cs-n">3</div><div>Claude 就能读取流量、创建规则、诊断请求了</div></div>
-        <div class="code-mini">"relaycraft": { "url": "http://localhost:7890/mcp" }</div>
+        <div class="code-mini">"relaycraft": { "url": "http://localhost:7090/mcp" }</div>
       </div>
     </div>
   </div>

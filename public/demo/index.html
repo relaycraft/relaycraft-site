@@ -213,7 +213,11 @@
       .dl-card { border: 1px solid #ccc; background: white; }
       .dl-name, .dl-desc { color: black; }
     }
-  </style>
+
+    .dl-single { display: flex; justify-content: center; }
+    .dl-large { padding: 28px 40px; min-width: 360px; }
+    .dl-cmd { margin-top: 10px; background: var(--bg3); border-radius: 6px; padding: 8px 14px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--orange); }
+      </style>
 </head>
 <body>
 <div class="progress" id="progress"></div>
@@ -749,21 +753,12 @@
     </div>
     <div class="download-links">
       <div class="dl-title">示例脚本下载</div>
-      <div class="dl-grid">
-        <a class="dl-card" href="https://mcp-static.vercel.app/mcp-server-demo.js" target="_blank">
+      <div class="dl-single">
+        <a class="dl-card dl-large" href="https://mcp-static.vercel.app/mock-server.js" target="_blank">
           <div class="dl-icon">🛰️</div>
-          <div class="dl-name">mcp-server-demo.js</div>
-          <div class="dl-desc">MCP 服务器 · 端口 7090 · 10 个工具</div>
-        </a>
-        <a class="dl-card" href="https://mcp-static.vercel.app/advanced-demo.js" target="_blank">
-          <div class="dl-icon">🤖</div>
-          <div class="dl-name">advanced-demo.js</div>
-          <div class="dl-desc">高级能力演示 · 9 步完整闭环</div>
-        </a>
-        <a class="dl-card" href="https://mcp-static.vercel.app/websocket-demo.js" target="_blank">
-          <div class="dl-icon">🔌</div>
-          <div class="dl-name">websocket-demo.js</div>
-          <div class="dl-desc">WebSocket 演示 · Echo 服务器</div>
+          <div class="dl-name">mock-server.js</div>
+          <div class="dl-desc">Mock HTTP 服务器 · 端口 3001 · 15+ 示例接口</div>
+          <div class="dl-cmd">node mock-server.js</div>
         </a>
       </div>
     </div>

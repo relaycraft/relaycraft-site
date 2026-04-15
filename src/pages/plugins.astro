@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Plugins - RelayCraft</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="canonical" href="https://relaycraft.dev/zh/plugins" />
+    <meta http-equiv="refresh" content="0;url=/zh/plugins" />
+    <script is:inline>
+      const getPreferredLanguage = () => {
+        try {
+          const pref = localStorage.getItem('preferred-language');
+          if (pref === 'en' || pref === 'zh') return pref;
+        } catch (e) {}
+
+        const languages = window.navigator.languages || [window.navigator.language];
+        for (const lang of languages) {
+          if (lang.startsWith('zh')) return 'zh';
+          if (lang.startsWith('en')) return 'en';
+        }
+        return 'en';
+      };
+
+      const lang = getPreferredLanguage();
+      window.location.replace(`/${lang}/plugins`);
+    </script>
+  </head>
+  <body style="background: #000;">
+    <noscript>
+      <p>Redirecting to <a href="/zh/plugins">RelayCraft Plugins</a>...</p>
+    </noscript>
+  </body>
+</html>

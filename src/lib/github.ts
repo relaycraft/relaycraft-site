@@ -53,3 +53,38 @@ export async function getLatestRelease(): Promise<GithubRelease | null> {
         return null;
     }
 }
+
+export interface GithubReleaseDetail {
+    version: string;
+    name: string;
+    releaseUrl: string;
+    publishedAt: string;
+    body: string;
+}
+
+export async function getAllReleases(): Promise<GithubReleaseDetail[]> {
+    try {
+        const response = await fetch(
+            'https://api.github.com/repos/relaycraft/relaycraft/releases?per_page=50'
+        );
+        if (!response.ok) {
+            console.error('Failed to fetch releases from GitHub');
+            return [];
+        }
+        const data = await response.json();
+
+        // Filter out pre-releases if needed, and map to our format
+        return data
+            .filter((release: any) => !release.draft)
+            .map((release: any) => ({
+                version: release.tag_name,
+                name: release.name || release.tag_name,
+                releaseUrl: release.html_url,
+                publishedAt: release.published_at,
+                body: release.body || '',
+            }));
+    } catch (error) {
+        console.error('Error fetching all releases:', error);
+        return [];
+    }
+}

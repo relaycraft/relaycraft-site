@@ -21,6 +21,15 @@ interface ParsedSection {
   other: string[];
 }
 
+function isStable(tagName: string): boolean {
+  // Exclude RC/beta/alpha/preview versions by tag name patterns
+  if (/-rc/i.test(tagName) || /-beta/i.test(tagName) || /-alpha/i.test(tagName) || /-preview/i.test(tagName)) return false;
+  // Only show v1.0.0 and above (exclude 0.99.x, 0.98.x, etc.)
+  const match = tagName.match(/^v?(\d+)\./);
+  if (!match) return false;
+  return parseInt(match[1]) >= 1;
+}
+
 function parseBody(body: string): ParsedSection {
   if (!body) return { features: [], improvements: [], bugfixes: [], other: [] };
 
@@ -34,10 +43,10 @@ function parseBody(body: string): ParsedSection {
 
   for (const line of lines) {
     const t = line.trim();
-    if (/^#{1,3}\s*(new\s*feature|added)/i.test(t)) { current = features; continue; }
-    if (/^#{1,3}\s*(improvement|changed)/i.test(t)) { current = improvements; continue; }
-    if (/^#{1,3}\s*(bug\s*fix|fixed)/i.test(t)) { current = bugfixes; continue; }
-    if (/^#{1,3}\s*(performance|deprecated|removed|other)/i.test(t)) { current = other; continue; }
+    if (/^#{1,3}\s*(new\s*feature|added|feature)/i.test(t)) { current = features; continue; }
+    if (/^#{1,3}\s*(improvement|changed|performance)/i.test(t)) { current = improvements; continue; }
+    if (/^#{1,3}\s*(bug\s*fix|fixed|fix)/i.test(t)) { current = bugfixes; continue; }
+    if (/^#{1,3}\s*(deprecated|removed|other)/i.test(t)) { current = other; continue; }
     if (/^[-*]\s+(.+)/.test(t)) {
       const text = t.replace(/^[-*]\s+/, '')
         .replace(/\*\*(.+?)\*\*/g, '$1')
@@ -95,18 +104,12 @@ const tagConfig = {
   },
 };
 
-const FILTER_OPTIONS = [
-  { key: 'all', labelEn: 'All', labelZh: '全部' },
-  { key: 'features', labelEn: 'New Feature', labelZh: '新功能' },
-  { key: 'improvements', labelEn: 'Improvement', labelZh: '改进' },
-  { key: 'bugfixes', labelEn: 'Bug Fix', labelZh: '问题修复' },
-];
+
 
 export function ChangelogClient({ lang, content }: Props) {
   const [releases, setReleases] = useState<Release[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [filter, setFilter] = useState('all');
 
   useEffect(() => {
     fetch('https://api.github.com/repos/relaycraft/relaycraft/releases?per_page=50', {
@@ -118,7 +121,7 @@ export function ChangelogClient({ lang, content }: Props) {
       })
       .then(data => {
         const stable = data
-          .filter((r: any) => !r.draft && !r.prerelease)
+          .filter((r: any) => isStable(r.tag_name))
           .map((r: any) => {
             const parts = (r.body || '').split(/^---$/m);
             return {
@@ -139,12 +142,7 @@ export function ChangelogClient({ lang, content }: Props) {
       });
   }, []);
 
-  const body = (r: Release) => lang === 'zh' ? r.bodyZh : r.bodyEn;
-
-  const tagLabel = (key: string) =>
-    key === 'all'
-      ? (lang === 'zh' ? '全部' : 'All')
-      : tagConfig[key as keyof typeof tagConfig]?.label[lang] || key;
+  const getBody = (r: Release) => lang === 'zh' ? r.bodyZh : r.bodyEn;
 
   if (loading) {
     return (
@@ -192,35 +190,11 @@ export function ChangelogClient({ lang, content }: Props) {
           </p>
         </div>
 
-        {/* Filter */}
-        <div className="flex flex-wrap justify-center gap-3 mb-12">
-          {FILTER_OPTIONS.map(opt => (
-            <button
-              key={opt.key}
-              onClick={() => setFilter(opt.key)}
-              className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold transition-all ${
-                filter === opt.key
-                  ? 'border border-primary/30 bg-primary/5 text-primary'
-                  : 'border border-border bg-card text-muted-foreground hover:text-foreground'
-              }`}
-            >
-              {opt.key !== 'all' && (
-                <span>{tagConfig[opt.key as keyof typeof tagConfig]?.emoji}</span>
-              )}
-              {tagLabel(opt.key)}
-            </button>
-          ))}
-        </div>
-
         {/* Entries */}
         <div className="space-y-8">
           {releases.map(release => {
-            const parsed = parseBody(body(release));
-            const hasAny =
-              filter === 'all'
-                ? true
-                : parsed[filter as keyof ParsedSection]?.length > 0;
-
+            const parsed = parseBody(getBody(release));
+            const hasAny = parsed.features.length || parsed.improvements.length || parsed.bugfixes.length || parsed.other.length;
             if (!hasAny) return null;
 
             return (
@@ -259,7 +233,6 @@ export function ChangelogClient({ lang, content }: Props) {
                 <div className="p-6">
                   {(['features', 'improvements', 'bugfixes', 'other'] as const).map(type => {
                     if (parsed[type].length === 0) return null;
-                    if (filter !== 'all' && filter !== type) return null;
                     const cfg = tagConfig[type];
 
                     return (

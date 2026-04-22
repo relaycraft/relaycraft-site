@@ -53,3 +53,57 @@ export async function getLatestRelease(): Promise<GithubRelease | null> {
         return null;
     }
 }
+
+export interface GithubReleaseDetail {
+    version: string;
+    name: string;
+    releaseUrl: string;
+    publishedAt: string;
+    bodyEn: string;
+    bodyZh: string;
+}
+
+export async function getAllReleases(): Promise<GithubReleaseDetail[]> {
+    try {
+        const response = await fetch(
+            'https://api.github.com/repos/relaycraft/relaycraft/releases?per_page=50'
+        );
+        if (!response.ok) {
+            console.error('Failed to fetch releases from GitHub');
+            return [];
+        }
+        const data = await response.json();
+
+        // Filter out draft and prerelease (RC) versions
+        return data
+            .filter((release: any) => !release.draft && !release.prerelease)
+            .map((release: any) => {
+                const body = release.body || '';
+                const parts = body.split(/^---$/m);
+                let bodyEn = '';
+                let bodyZh = '';
+
+                if (parts.length >= 2) {
+                    // First part is English, second part is Chinese
+                    bodyEn = parts[0].trim();
+                    bodyZh = parts.slice(1).join('---').trim();
+                } else {
+                    // Fallback: treat entire body as English
+                    bodyEn = body.trim();
+                    bodyZh = '';
+                }
+
+                return {
+                    version: release.tag_name,
+                    name: release.name || release.tag_name,
+                    releaseUrl: release.html_url,
+                    publishedAt: release.published_at,
+                    bodyEn,
+                    bodyZh,
+                };
+            });
+    } catch (error) {
+        console.error('Error fetching all releases:', error);
+        return [];
+    }
+}

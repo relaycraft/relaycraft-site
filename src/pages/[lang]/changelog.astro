@@ -1,0 +1,24 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { Header } from '../../components/Header';
+import { Footer } from '../../components/Footer';
+import { ChangelogClient } from '../../components/ChangelogClient';
+import { ui } from '../../i18n/ui';
+
+export function getStaticPaths() {
+  return [
+    {params: {lang: 'en'}},
+    {params: {lang: 'zh'}},
+  ];
+}
+
+const { lang } = Astro.params;
+const currentLang = (lang as 'en' | 'zh') || 'en';
+const content = ui[currentLang];
+---
+
+<Layout title={`${content['changelog.title']} - RelayCraft`} description={content['changelog.subtitle']} lang={currentLang}>
+  <Header client:load lang={currentLang} content={content} />
+  <ChangelogClient lang={currentLang} content={content} client:load />
+  <Footer lang={currentLang} content={content} />
+</Layout>

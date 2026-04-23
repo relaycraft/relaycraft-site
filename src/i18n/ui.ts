@@ -324,7 +324,7 @@ export const featureContent = {
     {
       title: "Python Scripting",
       description: "Natively supports the full mitmproxy Python ecosystem. Write powerful custom logics for complex scenarios beyond visual rules.",
-      bullets: ["Full access to request/response lifecycle with Python API", "Built-in editor with syntax highlighting and independent script logs", "Reuse thousands of existing mitmproxy addons and scripts"],
+      bullets: ["Full access to request/response lifecycle with Python code", "Built-in editor with syntax highlighting and independent script logs", "Reuse thousands of existing mitmproxy addons and scripts"],
       images: [
         "/images/features/scripting-1-{lang}.png",
         "/images/features/scripting-2-{lang}.png"
@@ -391,8 +391,8 @@ export const featureContent = {
     },
     {
       title: "脚本支持",
-      description: "原生支持实全量 mitmproxy Python 生态。通过 Python 脚本实现极其复杂的多步拦截与处理逻辑。",
-      bullets: ["通过 Python API 全面掌控请求/响应生命周期", "内置高亮编辑器与独立脚本日志，即写即用无需重启", "复用数以千计的现有 mitmproxy 插件与脚本库"],
+      description: "原生支持全量 mitmproxy Python 生态。通过 Python 脚本实现极其复杂的多步拦截与处理逻辑。",
+      bullets: ["通过 Python 代码全面掌控请求/响应生命周期", "内置高亮编辑器与独立脚本日志", "复用数以千计的现有 mitmproxy 插件与脚本库"],
       images: [
         "/images/features/scripting-1-{lang}.png",
         "/images/features/scripting-2-{lang}.png"

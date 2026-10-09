@@ -41,6 +41,21 @@ const content = ui[currentLang];
         </section>
 
         <section class="mb-10">
+          <h2 class="text-2xl font-bold mb-4 text-foreground">{content['terms.commercial.title']}</h2>
+          <p>
+            {content['terms.commercial.content']}{' '}
+            <a
+              href="https://github.com/relaycraft/relaycraft/blob/main/COMMERCIAL.md"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="underline hover:text-primary transition-colors"
+            >
+              COMMERCIAL.md
+            </a>
+          </p>
+        </section>
+
+        <section class="mb-10">
           <h2 class="text-2xl font-bold mb-4 text-foreground">{content['terms.usage.title']}</h2>
           <p>{content['terms.usage.content']}</p>
         </section>

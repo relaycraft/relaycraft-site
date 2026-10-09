@@ -34,6 +34,7 @@ export const Footer = ({ lang, content }: FooterProps) => {
               <li><a href={`/${currentLang}/changelog`} className="text-muted-foreground hover:text-primary transition-colors">{content['footer.changelog']}</a></li>
               <li><a href="https://docs.relaycraft.dev" className="text-muted-foreground hover:text-primary transition-colors">{content['nav.docs']}</a></li>
               <li><a href={`/${currentLang}/plugins`} className="text-muted-foreground hover:text-primary transition-colors">{content['nav.plugins']}</a></li>
+              <li><a href="https://github.com/relaycraft/relaycraft-themes" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">{content['footer.themes']}</a></li>
             </ul>
           </div>
 
@@ -44,6 +45,7 @@ export const Footer = ({ lang, content }: FooterProps) => {
               <li><a href={`/${currentLang}/blog`} className="text-muted-foreground hover:text-primary transition-colors">{content['footer.blog']}</a></li>
               <li><a href={`/${currentLang}/contact`} className="text-muted-foreground hover:text-primary transition-colors">{content['footer.contact']}</a></li>
               <li><a href={`/${currentLang}/privacy`} className="text-muted-foreground hover:text-primary transition-colors">{content['footer.privacy']}</a></li>
+              <li><a href="https://github.com/relaycraft/relaycraft/blob/main/COMMERCIAL.md" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">{content['footer.commercial']}</a></li>
             </ul>
           </div>
         </div>

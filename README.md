@@ -98,6 +98,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - **RelayCraft** - The main application ([GitHub](https://github.com/relaycraft/relaycraft))
 - **RelayCraft Docs** - Documentation site ([GitHub](https://github.com/relaycraft/relaycraft-docs))
+- **RelayCraft Plugins** - Plugin marketplace registry ([GitHub](https://github.com/relaycraft/relaycraft-plugins))
+- **RelayCraft Themes** - Theme marketplace registry ([GitHub](https://github.com/relaycraft/relaycraft-themes))
 
 ---
 

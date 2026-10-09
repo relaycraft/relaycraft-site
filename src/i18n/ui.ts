@@ -16,8 +16,8 @@ export const ui = {
     'nav.github': 'GitHub',
     'hero.badge': 'Now available',
     'hero.title': 'AI-Native <br /> Web Traffic Debugging Tool',
-    'hero.subtitle': 'A professional-grade, AI-native network debugging tool built with Tauri, React, and Rust. Features a powerful proxy engine based on mitmproxy, with deep AI integration and a built-in MCP server for external AI agents.',
-    'hero.image': '/images/hero-ui.png',
+    'hero.subtitle': 'A professional-grade, AI-native network debugging tool built with Tauri, React, and Rust. A high-performance mitmproxy engine inspects HTTP/HTTPS, WebSocket, SSE, and gRPC traffic locally — with deep AI integration, a built-in MCP server, and a plugin & theme platform.',
+    'hero.image': '/images/hero-{lang}-poster.png',
     'hero.cta.download': 'Download for Free',
     'hero.cta.docs': 'View Documentation',
     'features.title': 'Powerful Features for <br /> Modern Development',
@@ -59,12 +59,14 @@ export const ui = {
     'footer.product': 'Product',
     'footer.company': 'Company',
     'footer.rights': 'All rights reserved.',
-    'footer.description': 'The AI-native web traffic debugging tool. Debug, modify, and analyze HTTP traffic with ease.',
+    'footer.description': 'The AI-native traffic debugging tool. Inspect, modify, and replay HTTP, WebSocket, SSE, and gRPC traffic with ease.',
     'footer.changelog': 'Changelog',
     'footer.about': 'About',
     'footer.blog': 'Blog',
     'footer.contact': 'Contact',
     'footer.privacy': 'Privacy Policy',
+    'footer.themes': 'Themes',
+    'footer.commercial': 'Commercial License',
     'blog.title': 'RelayCraft Blog',
     'blog.subtitle': 'Development updates, technical deep-dives, and insights from the RelayCraft team.',
     'blog.featured': '✨ Featured',
@@ -94,10 +96,12 @@ export const ui = {
     'privacy.security.title': '4. Security',
     'privacy.security.content': 'Since your data stays local, you are responsible for the security of your own device. We recommend using strong encryption for your local storage.',
     'terms.title': 'Terms of Service',
-    'terms.lastUpdated': 'Last Updated: February 21, 2026',
-    'terms.intro': 'By downloading and using RelayCraft, you agree to the following terms. This software is provided primarily under the AGPLv3 open-source license.',
+    'terms.lastUpdated': 'Last Updated: October 10, 2026',
+    'terms.intro': 'By downloading and using RelayCraft, you agree to the following terms. This software is provided under the GNU GPLv3 open-source license, with an optional commercial license.',
     'terms.license.title': '1. License',
-    'terms.license.content': 'RelayCraft is open-source software. You may use, modify, and distribute it in accordance with the AGPLv3 license found in our GitHub repository.',
+    'terms.license.content': 'RelayCraft is open-source software released under the GNU GPLv3 license. You may use, modify, and distribute it in accordance with the GPLv3 license found in our GitHub repository.',
+    'terms.commercial.title': 'Commercial Licensing',
+    'terms.commercial.content': 'Organizations that wish to integrate RelayCraft into proprietary products, or modify it without the copyleft obligations of GPLv3, can obtain a commercial license. See our Commercial Use policy for details:',
     'terms.usage.title': '2. Ethical Usage',
     'terms.usage.content': 'You agree not to use RelayCraft for any illegal activities, including unauthorized access to systems or data that you do not have permission to inspect.',
     'terms.warranty.title': '3. No Warranty',
@@ -136,6 +140,9 @@ export const ui = {
     'plugins.cta.develop': 'Build Your Own Plugin',
     'plugins.cta.develop.desc': 'Want to create a plugin? Check out our developer documentation to get started.',
     'plugins.cta.develop.button': 'Plugin Development Guide',
+    'plugins.themes.title': 'Make It Yours with Themes',
+    'plugins.themes.desc': 'Restyle the entire interface with colors, fonts, and custom style snippets from the community theme market. Install a .rctheme in one click.',
+    'plugins.themes.button': 'Browse Theme Market',
   },
   zh: {
     'nav.home': '首页',
@@ -147,8 +154,8 @@ export const ui = {
     'nav.github': 'GitHub',
     'hero.badge': '正式版本现已发布',
     'hero.title': 'AI 原生 <br /> 网络流量调试工具',
-    'hero.subtitle': '基于 Tauri、React 和 Rust 构建的专业级 AI 原生网络调试工具。内置基于 mitmproxy 的高性能代理引擎，支持深度 AI 集成与面向外部 AI Agent 的 MCP 服务。',
-    'hero.image': '/images/hero-ui.png',
+    'hero.subtitle': '基于 Tauri、React 和 Rust 构建的专业级 AI 原生网络调试工具。高性能 mitmproxy 引擎全本地解析 HTTP/HTTPS、WebSocket、SSE 与 gRPC 流量，深度集成 AI、内置 MCP 服务，并提供插件与主题生态。',
+    'hero.image': '/images/hero-{lang}-poster.png',
     'hero.cta.download': '免费下载',
     'hero.cta.docs': '查看文档',
     'features.title': '面向现代开发的 <br /> 强大核心功能',
@@ -190,12 +197,14 @@ export const ui = {
     'footer.product': '首页',
     'footer.company': '公司',
     'footer.rights': '保留所有权利。',
-    'footer.description': '专为现代开发者匠心打造的 AI 原生网络流量调试工具，让调试更高效、更智能。',
+    'footer.description': '专为现代开发者打造的 AI 原生网络流量调试工具。轻松拦截、分析与重放 HTTP、WebSocket、SSE 与 gRPC 流量。',
     'footer.changelog': '更新日志',
     'footer.about': '关于我们',
     'footer.blog': '博客',
     'footer.contact': '联系我们',
     'footer.privacy': '隐私政策',
+    'footer.themes': '主题',
+    'footer.commercial': '商业授权',
     'blog.title': 'RelayCraft 博客',
     'blog.subtitle': '开发更新、技术深度解析，以及 RelayCraft 团队的见解分享。',
     'blog.featured': '✨ 精选文章',
@@ -225,10 +234,12 @@ export const ui = {
     'privacy.security.title': '4. 安全性',
     'privacy.security.content': '由于您的数据存储在本地，您需要对个人设备的安全性负责。我们建议为您的本地存储使用强加密手段。',
     'terms.title': '服务条款',
-    'terms.lastUpdated': '最后更新日期：2026年2月21日',
-    'terms.intro': '通过下载和使用 RelayCraft，即表示您同意以下条款。本软件主要根据 AGPLv3 开源协议提供。',
+    'terms.lastUpdated': '最后更新日期：2026年10月10日',
+    'terms.intro': '通过下载和使用 RelayCraft，即表示您同意以下条款。本软件基于 GNU GPLv3 开源协议提供，并可选商业授权。',
     'terms.license.title': '1. 授权协议',
-    'terms.license.content': 'RelayCraft 是一款开源软件。您可以根据我们 GitHub 仓库中的 AGPLv3 协议使用、修改和分发该软件。',
+    'terms.license.content': 'RelayCraft 是一款基于 GNU GPLv3 协议发布的开源软件。您可以依据我们 GitHub 仓库中的 GPLv3 协议使用、修改和分发该软件。',
+    'terms.commercial.title': '商业授权',
+    'terms.commercial.content': '如需将 RelayCraft 集成到闭源商业产品中，或在不承担 GPLv3 开源义务的前提下修改使用，可获取商业授权。详见《商业使用政策》：',
     'terms.usage.title': '2. 合规使用',
     'terms.usage.content': '您同意不将 RelayCraft 用于任何非法活动，包括未经授权访问您无权审计的系统或数据。',
     'terms.warranty.title': '3. 免责声明',
@@ -267,6 +278,9 @@ export const ui = {
     'plugins.cta.develop': '构建你自己的插件',
     'plugins.cta.develop.desc': '想要创建插件？查看我们的开发者文档开始吧。',
     'plugins.cta.develop.button': '插件开发指南',
+    'plugins.themes.title': '用主题打造专属界面',
+    'plugins.themes.desc': '通过社区主题市场自定义颜色、字体与样式片段，一键安装 .rctheme，改造整个界面风格。',
+    'plugins.themes.button': '浏览主题市场',
   },
 } as const;
 
@@ -274,8 +288,8 @@ export const featureContent = {
   en: [
     {
       title: "Traffic Monitor",
-      description: "High-performance real-time traffic capture powered by mitmproxy. Supports massive request lists with full detail inspection, image previews, and syntax highlighting.",
-      bullets: ["Deep protocol analysis: HTTP/1.1, HTTP/2, and WebSockets", "Powerful query syntax for multi-dimensional filtering", "One-click export to cURL, HAR, or Relay Session (.relay)"],
+      description: "High-performance, fully-local traffic capture powered by mitmproxy. Inspect HTTP/1.1, HTTP/2, WebSocket, Server-Sent Events, and gRPC unary calls with deep detail views, image previews, and syntax highlighting.",
+      bullets: ["Deep protocol analysis: HTTP/1.1, HTTP/2, WebSocket, SSE, and gRPC", "Identify mobile traffic sources and run connectivity diagnostics", "Powerful query syntax for multi-dimensional filtering", "One-click export to cURL, HAR, or Relay Session (.relay)"],
       images: [
         "/images/features/capture-1-{lang}.png",
         "/images/features/capture-2-{lang}.png",
@@ -284,8 +298,8 @@ export const featureContent = {
     },
     {
       title: "Rules Engine",
-      description: "A revolutionary visual rule builder that manages traffic behavior without config files. Supports 6 powerful rule types for total control.",
-      bullets: ["Map Local/Remote, Rewrite Header/Body, Throttling, and Blocking", "Visual builder with optional YAML editing and matched feedback", "Rule-as-file structure for easy sharing and group management"],
+      description: "Manage traffic behavior with a visual rule builder — no config files needed. Supports 6 rule types, reusable templates, and portable rule files for team sharing.",
+      bullets: ["Map Local/Remote, Rewrite Header/Body, Throttling, and Blocking", "Visual builder with optional YAML editing and live match feedback", "Rules-as-files with groups, import/export, and shareable templates"],
       images: [
         "/images/features/rules-1-{lang}.png",
         "/images/features/rules-2-{lang}.png",
@@ -295,7 +309,7 @@ export const featureContent = {
     {
       title: "AI Assistant",
       description: "AI-native throughout the entire workflow. Global Ctrl(⌘) + K command center understands your intent and acts as your co-debugger.",
-      bullets: ["Natural language creation of rewrite rules and mitmproxy scripts", "One-click automated request diagnostics and root cause analysis", "Smart search for traffic sessions using plain English queries"],
+      bullets: ["Natural language creation of rewrite rules and mitmproxy scripts", "Automated diagnostics: rule hits, security issues, and performance hints", "Smart search for traffic sessions using plain English queries"],
       images: [
         "/images/features/ai-1-{lang}.png",
         "/images/features/ai-2-{lang}.png",
@@ -314,8 +328,8 @@ export const featureContent = {
     },
     {
       title: "Request Composer",
-      description: "Built-in API client designed for debugging. Edit and resend directly from request list or import cURL with one click, view request response instantly.",
-      bullets: ["Support all HTTP methods and multiple body types", "Quick jump from request list, edit and resend freely", "cURL import and parsing support"],
+      description: "Built-in API client designed for debugging. Edit and resend any captured request — including WebSocket messages — or import cURL in one click.",
+      bullets: ["Support all HTTP methods and multiple body types", "Edit and resend captured HTTP and WebSocket messages", "cURL import and parsing support", "Instant formatted response preview (JSON, HTML, assets)"],
       images: [
         "/images/features/composer-1-{lang}.png",
         "/images/features/composer-2-{lang}.png"
@@ -332,8 +346,8 @@ export const featureContent = {
     },
     {
       title: "Extensibility",
-      description: "Advanced architecture design supporting plugins and themes. Extend software capabilities through flexible plugin system, customize interface styles with rich themes — build your exclusive tool.",
-      bullets: ["Flexible plugin architecture supporting UI and script extensions", "Comprehensive theme customization with colors, fonts, and even custom style snippets", "Open community plugin and theme registry for collaborative building"],
+      description: "An advanced, open platform for plugins and themes. Extend functionality with the plugin system and restyle the interface from the community theme market — build your perfect tool.",
+      bullets: ["Flexible plugin architecture for UI and script extensions, with explicit permissions and storage quotas", "Full theme customization — colors, fonts, and style snippets — installable from the Theme Market", "Open community plugin and theme registries for collaborative building"],
       images: [
         "/images/features/extensibility-1-{lang}.png",
         "/images/features/extensibility-2-{lang}.png"
@@ -343,8 +357,8 @@ export const featureContent = {
   zh: [
     {
       title: "流量监控",
-      description: "由 mitmproxy 驱动的高性能实时流量捕获引擎。支持海量请求列表的极速滚动，提供详尽的解析视图、图片预览与语法高亮。",
-      bullets: ["深度协议分析：支持 HTTP/1.1, HTTP/2 及 WebSocket", "强大的查询语法，支持多维度组合条件快速筛选", "一键导出为 cURL, HAR 或 Relay 会话格式 (.relay)"],
+      description: "由 mitmproxy 驱动的高性能、全本地流量捕获引擎。支持 HTTP/1.1、HTTP/2、WebSocket、SSE 与 gRPC 一元调用的深度解析，提供详尽的解析视图、图片预览与语法高亮。",
+      bullets: ["深度协议分析：HTTP/1.1、HTTP/2、WebSocket、SSE 与 gRPC", "识别移动端流量来源并进行连接诊断", "强大的查询语法，支持多维度组合条件快速筛选", "一键导出为 cURL, HAR 或 Relay 会话格式 (.relay)"],
       images: [
         "/images/features/capture-1-{lang}.png",
         "/images/features/capture-2-{lang}.png",
@@ -353,8 +367,8 @@ export const featureContent = {
     },
     {
       title: "规则引擎",
-      description: "颠覆传统的图形化规则构建器，无需手动编辑配置文件。内置 6 种规则类型，完美统管流量行为。",
-      bullets: ["Map Local/Remote, 内容/头部重写, 以及弱网模拟与阻断", "可视化构建流程，支持实时匹配反馈，告别盲推正则", "规则即文件，目录即分组，极易进行跨团队分享与同步"],
+      description: "颠覆传统的图形化规则构建器，无需手动编辑配置文件。内置 6 种规则类型，支持可复用模板与可移植的规则文件，便于团队协作共享。",
+      bullets: ["Map Local/Remote、内容/头部重写、弱网模拟与阻断", "可视化构建流程，支持实时匹配反馈，告别盲推正则", "规则即文件，支持目录分组、导入导出与模板分享"],
       images: [
         "/images/features/rules-1-{lang}.png",
         "/images/features/rules-2-{lang}.png"
@@ -362,8 +376,8 @@ export const featureContent = {
     },
     {
       title: "AI 助手",
-      description: "AI 深度融入全流程工作流。全局 Ctrl(⌘) + K 命令中心即时理解意图，充当你的“云端”调试专家。",
-      bullets: ["自然语言创建重写规则与 mitmproxy 脚本", "一键式自动化请求故障诊断与根因分析", "使用自然语言直接搜索历史请求与特定流量序列"],
+      description: "AI 深度融入全流程工作流。全局 Ctrl(⌘) + K 命令中心即时理解意图，充当你的智能调试搭档。",
+      bullets: ["自然语言创建重写规则与 mitmproxy 脚本", "自动化诊断：规则命中、安全隐患与性能优化建议", "使用自然语言直接搜索历史请求与特定流量序列"],
       images: [
         "/images/features/ai-1-{lang}.png",
         "/images/features/ai-2-{lang}.png",
@@ -382,8 +396,8 @@ export const featureContent = {
     },
     {
       title: "请求构造器",
-      description: "内置专为调试设计的 API 客户端，支持从请求列表中直接编辑重发或 cURL 一键导入，即时查看请求响应。",
-      bullets: ["支持全部HTTP请求方法及多种请求体类型", "支持从请求列表快速跳转，可任意编辑后重发", "支持 cURL 导入解析"],
+      description: "内置专为调试设计的 API 客户端，支持从请求列表中直接编辑重发（含 WebSocket 消息）或 cURL 一键导入。",
+      bullets: ["支持全部 HTTP 请求方法及多种请求体类型", "支持直接编辑并重发 HTTP 与 WebSocket 消息", "支持 cURL 导入解析", "即时查看格式化响应（JSON、HTML、资源）"],
       images: [
         "/images/features/composer-1-{lang}.png",
         "/images/features/composer-2-{lang}.png"
@@ -400,8 +414,8 @@ export const featureContent = {
     },
     {
       title: "扩展能力",
-      description: "先进的架构设计，支持插件与主题扩展，通过灵活的插件系统扩展软件能力，通过丰富的主题自定义界面样式，打造你的专属工具。",
-      bullets: ["灵活的插件架构支持界面和脚本扩展", "全面的主题自定义支持，可自定义颜色、字体甚至插入样式片断", "开放社区插件及主题仓库共创共建"],
+      description: "先进的开放平台，支持插件与主题扩展。通过插件系统扩展能力，通过社区主题市场自定义界面样式，打造你的专属工具。",
+      bullets: ["灵活的插件架构支持界面和脚本扩展，具备明确的权限与存储配额管理", "全面的主题自定义（颜色、字体、样式片段），可从主题市场一键安装", "开放社区插件与主题仓库，共创共建"],
       images: [
         "/images/features/extensibility-1-{lang}.png",
         "/images/features/extensibility-2-{lang}.png"
@@ -431,49 +445,51 @@ export const securityContent = {
     { title: "Zero Accounts", description: "No registration, no login, no subscriptions. Just download and use." },
     { title: "Local Storage", description: "All rules, configs, and captures 100% stored locally, fully under your control." },
     { title: "Local AI Support", description: "Support for Ollama and other local LLMs — sensitive data never goes to cloud." },
-    { title: "Open Source", description: "Core code AGPLv3 open source, security verified by community, no backdoors." },
-    { title: "No Telemetry", description: "Reject all forms of invisible data collection, analysis, or tracking." }
+    { title: "Open Source", description: "Core code GPLv3 open source (dual-licensed for commercial use), verified by the community, no backdoors." },
+    { title: "No Telemetry", description: "Reject all forms of invisible data collection, analysis, or tracking." },
+    { title: "Sandboxed Plugins", description: "Plugins declare explicit permissions and run within enforced storage quotas. Nothing is installed silently." }
   ],
   zh: [
     { title: "完全离线运行", description: "无需联网即可使用全部核心功能，流量数据永远不会离开本地设备。" },
     { title: "零账号体系", description: "无需注册、无需登录、无需订阅，下载即用。" },
     { title: "本地化存储", description: "所有规则、配置、抓包数据 100% 存储在本地，完全掌控。" },
     { title: "本地 AI 支持", description: "支持 Ollama 等本地大模型，敏感数据无需上传云端。" },
-    { title: "开源可审计", description: "核心代码 AGPLv3 开源，安全性经过社区验证，无后门。" },
-    { title: "无遥测追踪", description: "拒绝任何形式的隐形数据收集、分析或追踪。" }
+    { title: "开源可审计", description: "核心代码 GPLv3 开源（商业用途可双授权），安全性经过社区验证，无后门。" },
+    { title: "无遥测追踪", description: "拒绝任何形式的隐形数据收集、分析或追踪。" },
+    { title: "插件沙箱", description: "插件需声明明确权限，并受存储配额约束运行，杜绝静默安装与越权访问。" }
   ]
 };
 
 export const mcpContent = {
   en: {
     title: 'Built-in MCP Support',
-    subtitle: 'Bridge the gap between your network traffic and AI agents. RelayCraft features a built-in Model Context Protocol server.',
+    subtitle: 'Bridge the gap between your network traffic and AI agents. RelayCraft ships a built-in Model Context Protocol server that any MCP-compatible client can connect to.',
     image: '/images/mcp-visual-en.png',
     cta: 'Learn about MCP',
     features: [
       {
         title: 'Live Traffic Context',
-        description: 'Let Claude or Cursor "read" your live sessions, search flows, and understand API behaviors instantly.'
+        description: 'Let Claude, Cursor, or any MCP client read live sessions, search flows, and understand API behavior instantly.'
       },
       {
         title: 'Agent-Driven Debugging',
-        description: 'Empower your AI to create rules, replay requests, and manage traffic behavior using natural language.'
+        description: 'Empower your AI to create and manage rules, replay requests, and inspect traffic — with full visibility into external AI tool activity.'
       }
     ]
   },
   zh: {
     title: '内置 MCP 协议支持',
-    subtitle: '连接实时流量与 AI Agent 的桥梁。RelayCraft 深度集成 Model Context Protocol (MCP) 服务。',
+    subtitle: '连接实时流量与 AI Agent 的桥梁。RelayCraft 内置 Model Context Protocol 服务，任何兼容 MCP 的客户端均可接入。',
     image: '/images/mcp-visual-zh.png',
     cta: '了解 MCP 协议',
     features: [
       {
         title: '实时流量感知',
-        description: '让 Claude Desktop 或 Cursor 能够实时"读懂"你的抓包会话、搜索流数据并理解 API 行为。'
+        description: '让 Claude、Cursor 或任意 MCP 客户端实时"读懂"会话、搜索流数据并理解 API 行为。'
       },
       {
-        title: '智能体驱动测试',
-        description: '授权你的 AI Agent 使用自然语言创建拦截规则、重发请求，实现自动化交互式调试。'
+        title: '智能体驱动调试',
+        description: '授权 AI Agent 使用自然语言创建与管理规则、重发请求、检索流量，并可视化外部 AI 工具的活动。'
       }
     ]
   }

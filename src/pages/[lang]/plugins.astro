@@ -105,6 +105,29 @@ const pageDescription = content['plugins.subtitle'];
           </a>
         </div>
       </section>
+
+      <!-- CTA: Theme market -->
+      <section class="relative mt-8 p-8 md:p-12 rounded-3xl bg-gradient-to-br from-primary/10 via-secondary/20 to-purple-500/10 border border-primary/10 overflow-hidden text-center">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-primary/10 rounded-full blur-3xl -mt-40"></div>
+        <div class="relative z-10">
+          <div class="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 border border-primary/20 text-primary mb-6">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>
+          </div>
+          <h3 class="text-2xl md:text-3xl font-bold mb-3">{content['plugins.themes.title']}</h3>
+          <p class="text-muted-foreground text-lg mb-8 max-w-xl mx-auto">
+            {content['plugins.themes.desc']}
+          </p>
+          <a
+            href="https://github.com/relaycraft/relaycraft-themes"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex h-11 items-center justify-center rounded-lg border border-primary/30 bg-background/50 px-6 text-sm font-medium text-foreground shadow transition-all duration-300 hover:bg-primary hover:text-primary-foreground hover:shadow-[0_0_24px_-4px_rgba(59,130,246,0.5)]"
+          >
+            {content['plugins.themes.button']}
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+        </div>
+      </section>
     </div>
   </main>
 
